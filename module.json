@@ -1,0 +1,10 @@
+{
+    "name": "foundry-timeline",
+    "title": "A module to record a party's actions in a timeline format",
+    "description": "Inspired by WorldAnvil's timeline feature, this is an attempt to recreate that functionality in Foundry. It manages a single journal entry and folder to add timeline entries a the DM records them",
+    "author": "Bedlam",
+    "version": "0.0.1",
+    "minimumCoreVersion": "0.6.5",
+    "esmodules": [ "./modules/main.js"],
+    "styles" : ["./styles/button.css"]
+}

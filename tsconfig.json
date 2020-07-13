@@ -1,0 +1,11 @@
+{ 
+    "compilerOptions": {
+        "allowJs" : true,
+        "experimentalDecorators": true,
+        "target": "ES2020",
+        "types": [
+            "/node_modules/foundry-pc-types"
+        ],
+        "outDir": "./out-js"
+    }
+}
