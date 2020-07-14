@@ -1,0 +1,64 @@
+/**
+ * Main timeline window formatting
+ */
+
+#timeline-management {
+    min-width: 500px;
+    min-height: 400px;
+}
+
+
+/**
+ * sidebar formatting
+ */
+
+#timeline-management nav.timelines-available {
+    display: block;
+    position: absolute;
+    left: -120px;
+    top: 32px;
+    z-index: -10px;
+}
+
+
+/**
+ * sidebar item formatting
+ */
+
+#timeline-management nav.timelines-available a.item {
+    display: block;
+    width: 125px;
+    height: 32px;
+    overflow: hidden;
+    text-align: right;
+    padding: 7px 15px;
+    margin-bottom: 5px;
+    border: 1px solid #333;
+    background: url("/ui/parchment.jpg") repeat;
+    box-shadow: inset 0 0 0 2000px rgba(133, 133, 133, 0.1);
+}
+
+
+/**
+ * selected sidebar item formatting
+ */
+
+#timeline-management nav.timelines-available a.item {
+    border: 2px solid #833;
+    box-shadow: inset 0 0 0 2000px rgba(250, 250, 250, 0.1)
+}
+
+#timeline-management section.log-body {
+    min-height: calc(100% - 60px);
+}
+
+#timeline-management section.log-body .tab {
+    height: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 1px 1px;
+}
+
+#timeline-management section.log-body .tab.active {
+    display: grid;
+}

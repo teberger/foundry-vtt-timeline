@@ -1,0 +1,39 @@
+export default class TimelineManager extends Application {
+
+    static get defaultOptions() {
+        return mergeObject(super.defaultOptions, {
+            id: "forien-quest-log",
+            classes: ['forien-quest-log'],
+            template: "modules/foundry-timeline/templates/wa-timeline-copy.html",
+            width: 900,
+            height: 680,
+            minimizable: true,
+            resizable: true,
+            title: "Active Timelines",
+            popOut: true
+                //, tabs: [{navSelector: ".log-tabs", contentSelector: ".log-body", initial: "progress"}]
+        });
+    }
+
+    _getHeaderButtons() {
+        const buttons = super._getHeaderButtons();
+        // TODO [teb] change this if I see a need for additional buttons along the header bar (close, minimize, maximize)
+        return buttons;
+    }
+
+    getData(options = {}) {
+        // Return promise object containing info used during rendering a template
+        return mergeObject(super.getData(), {
+            options: options
+                //, timelines: Timeline.getTimelines()
+        });
+    }
+
+    activateListeners(html) {
+        super.activateListeners(html);
+
+        html.on("click", ".new-timeline-btn", () => {
+            // Render a new timeline from that will give it a title and start date
+        });
+    }
+}

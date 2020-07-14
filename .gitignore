@@ -1,4 +1,8 @@
-# IDE
 .idea/
-.vs/
-.vscode/
+styles/.sass-cache/
+devtool/
+lang/untranslated.json
+node_modules/
+foundry.js
+package.json
+/changelog.html

@@ -1,0 +1,10 @@
+{
+    "html.format.indentHandlebars": true,
+    "files.associations": {
+        "*.html": "handlebars"
+    },
+    "[handlebars]": {
+    
+        "editor.suggest.insertMode": "replace"
+    }
+}
