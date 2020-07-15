@@ -1,4 +1,7 @@
 <h1>{{format 'ForienQuestLog.Quests' (localize (lookup questTypes tab))}}</h1>
 <div>
-
+{{!-- pull the initial structure from wa-timeline-copy.html --}}
+  {{#each entries}}
+    {{!-- render each entry using the timeline-entry.html template --}}
+  {{/each}}
 </div>

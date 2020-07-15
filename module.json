@@ -11,6 +11,7 @@
         "./modules/main-timeline.js"
     ],
     "styles": [
+        "./styles/init.css",
         "./styles/wa-timeline.css",
         "./styles/wa-display.css",
         "./styles/button.css"

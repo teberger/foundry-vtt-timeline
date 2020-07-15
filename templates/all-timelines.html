@@ -1,44 +1,20 @@
-<div class="timeline-management {{style}}">
-    <nav class="timelines-available" data-group="primary">
-        {{#for t in timelines}}
-          {{#if (or isGm t.playerVisible) }}
-            <a class="item" data-tab="{{t}}">{{t.name}}</a>
+<div class="quest-log classic">
+    <nav class="log-tabs tabs classic" data-group="primary">
+        {{#each timelines}}
+          {{#if (or isGm this.playerVisible) }}
+            <a class="item" data-tab="available">{{this.name}}</a>
           {{/if}}
-        {{/for}}
+        {{/each}}
     </nav>
-    <section class="log-body {{style}}">
-        {{#for t in timelines}}
-          {{#if (or isGm t.playerVisible) }}
-            <div class="tab" data-group="primary" data-tab="{{t}}">{{t.name}}
-                {{> "modules/foundry-timeline/templates/partials/timeline.html" tab="{{t.name}}" entries=t.entries}}
+    <section class="log-body classic">
+        {{#each timelines}}
+          {{#if (or isGm this.playerVisible) }}
+            <div class="tab available" data-group="primary" data-tab="{{@key}}">{{this.name}}
+                {{> "modules/foundry-timeline/templates/partials/timeline.html" tab="{{this.name}}" entries=this.entries}}
             </div>
           {{/if}}
-        {{/for}}
-        {{!--
-        {{#if availableTab}}
-        <div class="tab available" data-group="primary" data-tab="available">
-            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="available" quests=quests.available}}
-        </div>
-        {{/if}}
-        <div class="tab in-progress" data-group="primary" data-tab="progress">
-            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="active" quests=quests.active}}
-        </div>
-        <div class="tab completed" data-group="primary" data-tab="completed">
-            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="completed" quests=quests.completed}}
-        </div>
-        <div class="tab failed" data-group="primary" data-tab="failed">
-            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="failed" quests=quests.failed}}
-        </div>
-        {{#if isGM}}
-        <div class="tab hidden" data-group="primary" data-tab="hidden">
-            {{> "modules/forien-quest-log/templates/partials/quest-log/tab.html" tab="hidden" quests=quests.hidden}}
-        </div>
-        {{/if}}
-        --}}
+        {{/each}}
     </section>
-    {{#if (or isGM canCreate)}}
-    <footer>
-        <button class="new-timeline-btn">start new timeline</button>
-    </footer>
+    {{#if isGm }}
     {{/if}}
 </div>

@@ -1,0 +1,138 @@
+#forien-quest-log {
+    min-width: 500px;
+    min-height: 300px;
+    div.quest-log {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 1fr) auto;
+        gap: 1px 1px;
+        &.classic {
+            grid-template-rows: auto minmax(0, 1fr) auto;
+        }
+    }
+    /**
+     * Only applies if setting set to Bookmarks.
+     * Shows tabs on the left from the window with custom style
+     */
+    nav.log-tabs.bookmarks {
+        display: block;
+        position: absolute;
+        left: -120px;
+        top: 32px;
+        z-index: -10;
+        a.item {
+            display: block;
+            width: 125px;
+            height: 32px;
+            overflow: hidden;
+            text-align: right;
+            padding: 7px 15px;
+            margin-bottom: 5px;
+            border: 1px solid $border;
+            background: $background-parchment;
+            box-shadow: inset 0 0 0 2000px rgba(133, 133, 133, 0.1);
+            &.active {
+                border: 2px solid $border-active;
+                box-shadow: inset 0 0 0 2000px rgba(250, 250, 250, 0.1);
+            }
+        }
+    }
+    section.log-body {
+        &.classic {
+            min-height: calc(100% - #{$footer-size + 20px});
+        }
+        .tab {
+            height: 100%;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr;
+            gap: 1px 1px;
+            &.active {
+                display: grid;
+            }
+            h1 {
+                margin: 0;
+            }
+            .table {
+                overflow: auto;
+                table {
+                    margin: 0;
+                    border: none;
+                    background: none;
+                    thead {
+                        background: none;
+                        color: #000;
+                        text-shadow: none;
+                        border-bottom: none;
+                    }
+                    tr {
+                        height: 30px;
+                        th {
+                            border-bottom: 1px #666 solid;
+                            &.quest-giver-col {
+                                width: 120px;
+                            }
+                            &.actions-col {
+                                width: 100px;
+                            }
+                            &.tasks-col {
+                                width: 60px;
+                            }
+                            &.sortable {
+                                cursor: pointer;
+                            }
+                        }
+                        td {
+                            text-align: center;
+                            &.title {
+                                font-weight: bold;
+                                cursor: pointer;
+                                small {
+                                    display: block;
+                                    font-style: italic;
+                                    margin-left: 20px;
+                                    font-weight: normal;
+                                }
+                                &.left {
+                                    text-align: left;
+                                }
+                                &.center {
+                                    text-align: center;
+                                }
+                                &:hover {
+                                    text-shadow: 2px 2px 5px rgba(51, 51, 51, 0.4);
+                                }
+                            }
+                            &.img {
+                                cursor: pointer;
+                                img {
+                                    width: 55px;
+                                    height: 55px;
+                                    border: none;
+                                    object-fit: cover;
+                                    border-radius: 4px;
+                                }
+                            }
+                            &.actions {
+                                i.fas {
+                                    cursor: pointer;
+                                    margin-right: 5px;
+                                    &:last-of-type {
+                                        margin-right: 0;
+                                    }
+                                }
+                            }
+                        }
+                        &:nth-child(2n) {
+                            background: rgba(0, 0, 0, 0.05)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    footer {
+        height: $footer-size;
+        padding: $footer-padding;
+    }
+}

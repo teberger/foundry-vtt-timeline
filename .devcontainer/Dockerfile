@@ -10,3 +10,5 @@ RUN npm install --save-dev gitlab:foundry-projects/foundry-pc/foundry-pc-types
 
 RUN git config --global user.name "Taylor E. Berger"
 RUN git config --global user.email "taylor.e.berger@gmail.com"
+
+RUN npm install -g sass
