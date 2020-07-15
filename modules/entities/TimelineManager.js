@@ -12,7 +12,8 @@ export default class TimelineManager extends Application {
             minimizable: true,
             resizable: true,
             title: "Active Timelines",
-            popOut: true
+            popOut: true,
+            tabs: [{ navSelector: ".timelines-available", contentSelector: ".log-body", initial: "management" }]
         });
     }
 
