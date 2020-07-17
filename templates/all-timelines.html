@@ -1,27 +1,29 @@
-<div class="quest-log classic">
+<div class="quest-log bookmarks">
     <nav class="log-tabs tabs bookmarks" data-group="primary">
-        <a class="item" data-tab="management">Management</a>
+        <a class="item" data-tab="management">Managements</a>
         {{#each timelines}}
           {{#if (or isGm this.playerVisible) }}
             <a class="item" data-tab="{{@key}}">{{this.name}}</a>
           {{/if}}
         {{/each}}
     </nav>
-    <section class="log-body classic">
+    <section class="log-body tab bookmarks">
         <div class="tab" data-group="primary" data-tab="management">
             <p>TODO</p>
         </div>
         {{#each timelines}}
           {{#if (or isGm this.playerVisible) }}
-            <div class="tab" data-group="primary" data-tab="{{@key}}">{{this.name}}
+            <div class="tab in-progress" data-group="primary" data-tab="{{@key}}">{{this.name}}
                 {{> "modules/foundry-timeline/templates/partials/timeline.html" tab="{{@key}}" entries=this.entries}}
             </div>
           {{/if}}
         {{/each}}
     </section>
-    {{#if isGm }}
     <footer>
-        <button class="new-timeline-btn">start new timeline</button>
+      {{#if isGm }}
+          <button class="new-timeline-btn">Start New Timeline</button>
+          <button class="new-timeline-event-btn">New Event</button>
+          <button class="delete-timeline-btn">Delete Timeline</button>
+      {{/if}}
     </footer>
-    {{/if}}
 </div>

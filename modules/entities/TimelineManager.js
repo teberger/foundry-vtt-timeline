@@ -13,7 +13,7 @@ export default class TimelineManager extends Application {
             resizable: true,
             title: "Active Timelines",
             popOut: true,
-            tabs: [{ navSelector: ".timelines-available", contentSelector: ".log-body", initial: "management" }]
+            tabs: [{ navSelector: ".log-tabs", contentSelector: ".log-body", initial: "management" }]
         });
     }
 
@@ -37,7 +37,15 @@ export default class TimelineManager extends Application {
 
         html.on("click", ".new-timeline-btn", () => {
             console.debug("Timeline | creating new timeline");
-            // Render a new timeline from that will give it a title and start date
+            // Render a new timeline form that will give it a title and start date
+        });
+        html.on("click", ".new-timeline-event-btn", () => {
+            console.debug("Timeline | creating new timeline event");
+            // Render a new timeline event form that will potentially hook into about-time
+        });
+        html.on("click", ".delete-event-btn", () => {
+            console.debug("Timeline | deleted timeline");
+            // need a confirmation button, but deletes the current timeline
         });
     }
 }

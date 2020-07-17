@@ -1,15 +1,16 @@
 #forien-quest-log {
     min-width: 500px;
     min-height: 300px;
-    div.quest-log {
-        height: 100%;
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: minmax(0, 1fr) auto;
-        gap: 1px 1px;
-        &.classic {
-            grid-template-rows: auto minmax(0, 1fr) auto;
-        }
+}
+
+div.quest-log {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 1px 1px;
+    &.classic {
+        grid-template-rows: auto minmax(0, 1fr) auto;
     }
     /**
      * Only applies if setting set to Bookmarks.
@@ -133,6 +134,8 @@
     }
     footer {
         height: $footer-size;
+        max-height: $footer-size;
         padding: $footer-padding;
+        display: flex
     }
 }

@@ -1,29 +1,30 @@
 #forien-quest-log {
   min-width: 500px;
   min-height: 300px;
-  /**
-   * Only applies if setting set to Bookmarks.
-   * Shows tabs on the left from the window with custom style
-   */
 }
-#forien-quest-log div.quest-log {
+
+div.quest-log {
   height: 100%;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: minmax(0, 1fr) auto;
   gap: 1px 1px;
+  /**
+   * Only applies if setting set to Bookmarks.
+   * Shows tabs on the left from the window with custom style
+   */
 }
-#forien-quest-log div.quest-log.classic {
+div.quest-log.classic {
   grid-template-rows: auto minmax(0, 1fr) auto;
 }
-#forien-quest-log nav.log-tabs.bookmarks {
+div.quest-log nav.log-tabs.bookmarks {
   display: block;
   position: absolute;
   left: -120px;
   top: 32px;
   z-index: -10;
 }
-#forien-quest-log nav.log-tabs.bookmarks a.item {
+div.quest-log nav.log-tabs.bookmarks a.item {
   display: block;
   width: 125px;
   height: 32px;
@@ -35,102 +36,104 @@
   background: url("/ui/parchment.jpg") repeat;
   box-shadow: inset 0 0 0 2000px rgba(133, 133, 133, 0.1);
 }
-#forien-quest-log nav.log-tabs.bookmarks a.item.active {
+div.quest-log nav.log-tabs.bookmarks a.item.active {
   border: 2px solid #833;
   box-shadow: inset 0 0 0 2000px rgba(250, 250, 250, 0.1);
 }
-#forien-quest-log section.log-body.classic {
+div.quest-log section.log-body.classic {
   min-height: calc(100% - 60px);
 }
-#forien-quest-log section.log-body .tab {
+div.quest-log section.log-body .tab {
   height: 100%;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
   gap: 1px 1px;
 }
-#forien-quest-log section.log-body .tab.active {
+div.quest-log section.log-body .tab.active {
   display: grid;
 }
-#forien-quest-log section.log-body .tab h1 {
+div.quest-log section.log-body .tab h1 {
   margin: 0;
 }
-#forien-quest-log section.log-body .tab .table {
+div.quest-log section.log-body .tab .table {
   overflow: auto;
 }
-#forien-quest-log section.log-body .tab .table table {
+div.quest-log section.log-body .tab .table table {
   margin: 0;
   border: none;
   background: none;
 }
-#forien-quest-log section.log-body .tab .table table thead {
+div.quest-log section.log-body .tab .table table thead {
   background: none;
   color: #000;
   text-shadow: none;
   border-bottom: none;
 }
-#forien-quest-log section.log-body .tab .table table tr {
+div.quest-log section.log-body .tab .table table tr {
   height: 30px;
 }
-#forien-quest-log section.log-body .tab .table table tr th {
+div.quest-log section.log-body .tab .table table tr th {
   border-bottom: 1px #666 solid;
 }
-#forien-quest-log section.log-body .tab .table table tr th.quest-giver-col {
+div.quest-log section.log-body .tab .table table tr th.quest-giver-col {
   width: 120px;
 }
-#forien-quest-log section.log-body .tab .table table tr th.actions-col {
+div.quest-log section.log-body .tab .table table tr th.actions-col {
   width: 100px;
 }
-#forien-quest-log section.log-body .tab .table table tr th.tasks-col {
+div.quest-log section.log-body .tab .table table tr th.tasks-col {
   width: 60px;
 }
-#forien-quest-log section.log-body .tab .table table tr th.sortable {
+div.quest-log section.log-body .tab .table table tr th.sortable {
   cursor: pointer;
 }
-#forien-quest-log section.log-body .tab .table table tr td {
+div.quest-log section.log-body .tab .table table tr td {
   text-align: center;
 }
-#forien-quest-log section.log-body .tab .table table tr td.title {
+div.quest-log section.log-body .tab .table table tr td.title {
   font-weight: bold;
   cursor: pointer;
 }
-#forien-quest-log section.log-body .tab .table table tr td.title small {
+div.quest-log section.log-body .tab .table table tr td.title small {
   display: block;
   font-style: italic;
   margin-left: 20px;
   font-weight: normal;
 }
-#forien-quest-log section.log-body .tab .table table tr td.title.left {
+div.quest-log section.log-body .tab .table table tr td.title.left {
   text-align: left;
 }
-#forien-quest-log section.log-body .tab .table table tr td.title.center {
+div.quest-log section.log-body .tab .table table tr td.title.center {
   text-align: center;
 }
-#forien-quest-log section.log-body .tab .table table tr td.title:hover {
+div.quest-log section.log-body .tab .table table tr td.title:hover {
   text-shadow: 2px 2px 5px rgba(51, 51, 51, 0.4);
 }
-#forien-quest-log section.log-body .tab .table table tr td.img {
+div.quest-log section.log-body .tab .table table tr td.img {
   cursor: pointer;
 }
-#forien-quest-log section.log-body .tab .table table tr td.img img {
+div.quest-log section.log-body .tab .table table tr td.img img {
   width: 55px;
   height: 55px;
   border: none;
   object-fit: cover;
   border-radius: 4px;
 }
-#forien-quest-log section.log-body .tab .table table tr td.actions i.fas {
+div.quest-log section.log-body .tab .table table tr td.actions i.fas {
   cursor: pointer;
   margin-right: 5px;
 }
-#forien-quest-log section.log-body .tab .table table tr td.actions i.fas:last-of-type {
+div.quest-log section.log-body .tab .table table tr td.actions i.fas:last-of-type {
   margin-right: 0;
 }
-#forien-quest-log section.log-body .tab .table table tr:nth-child(2n) {
+div.quest-log section.log-body .tab .table table tr:nth-child(2n) {
   background: rgba(0, 0, 0, 0.05);
 }
-#forien-quest-log footer {
+div.quest-log footer {
   height: 40px;
+  max-height: 40px;
   padding: 4px;
+  display: flex;
 }
 
 /*# sourceMappingURL=init.css.map */
