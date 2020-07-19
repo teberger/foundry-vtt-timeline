@@ -1,41 +1,18 @@
+import TimelineEntry from "./TimelineEntry.js"
+
 export default class Timeline {
     constructor(data = {}, entry = null) {
-        this._id = data.id || null;
-        this.entry = entry;
+        this._id = data._id;
+        this.htmlDescription = data.htmlDescription || "<p>No description</p>";
+        this.title = data.title || "New Timeline";
+        this.shortName = this.title.length > 14 ? this.title.substring(0, 11) + "..." : this.title;
+        this.entries = data.entries || [];
+        this.playerVisible = data.playerVisible || false;
+        this.era = data.era || "";
 
-        this._data = data
-    }
-
-    /**
-     * A comparator for 
-     * @param {Timeline} timeline1 
-     * @param {Timeline} timeline2 
-     * @returns
-     */
-    static comparator(timeline1, timeline2) {
-        let years = timeline1.year - timeline2.year;
-        let months = timeline1.month - timeline2.month;
-        let days = timeline1.day - timeline2.day;
-        let hours = timeline1.hours - timeline2.hours;
-        let minutes = timeline1.minutes - timeline2.minutes;
-        return (years != 0 ? years :
-            months != 0 ? months :
-            days != 0 ? days :
-            hours != 0 ? hours :
-            minutes);
-    }
-
-    /**
-     * @returns an objects such that each entry has the following fields:
-     *   playerVisible: boolean flag that determines whether the player can see the tab
-     *   name: the name of the timeline, used to populate the side bar of the TimelineManger window
-     *   entries: an array of TimelineEntry objects
-     */
-    static getAllTimelines() {
-        //TODO [teb] should fetch all timeline entities wherever they are stored
-        let currentTimelineEntries = [{
+        // TODO delete this and load from disk instead
+        this.entries = [{
                 year: 1974,
-                era: "GD",
                 day: 16,
                 month: 8,
                 hours: 21,
@@ -46,7 +23,6 @@ export default class Timeline {
             },
             {
                 year: 1975,
-                era: "GDA",
                 day: 18,
                 month: 9,
                 hours: 21,
@@ -57,7 +33,6 @@ export default class Timeline {
             },
             {
                 year: 1973,
-                era: "GDA",
                 day: 17,
                 month: 9,
                 hours: 21,
@@ -67,18 +42,32 @@ export default class Timeline {
                 eventTitle: "Loyer dies"
             }
         ];
+    }
 
-        // inverse sort of all events to make sure they show the newest event first
-        currentTimelineEntries.sort(function(e1, e2) {
-            return -Timeline.comparator(e1, e2)
+    reload() {
+        //TODO read from disk using some ID
+    }
+
+    /**
+     * @returns an objects such that each entry has the following fields:
+     *   name: the name of the timeline, used to populate the side bar of the TimelineManger window
+     *   description: an html description of of the timeline, used for displaying at the top of the div
+     *   playerVisible: boolean flag that determines whether the player can see the tab
+     *   entries: an array of TimelineEntry objects
+     */
+    asJson() {
+        //resort to make sure we are displaying the most recent
+        this.entries.sort(function(e1, e2) {
+            return -TimelineEntry.comparator(e1, e2)
         });
 
         return {
-            timeline1: {
-                name: "Test Timeline",
-                playerVisible: true,
-                entries: currentTimelineEntries
-            }
+            name: this.title,
+            shortName: this.shortName,
+            era: this.era,
+            description: TextEditor.enrichHTML(this.htmlDescription),
+            playerVisible: this.playerVisible,
+            entries: this.entries
         };
     }
 }

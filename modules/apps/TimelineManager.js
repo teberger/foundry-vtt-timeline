@@ -1,6 +1,10 @@
 import Timeline from "../entities/Timeline.js"
 
 export default class TimelineManager extends Application {
+    //TODO temp timeline to debug
+    timeline = new Timeline();
+
+    // constructor() {}
 
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -37,12 +41,13 @@ export default class TimelineManager extends Application {
         return mergeObject(super.getData(), {
             options: options,
             isGm: game.user.isGM,
-            timelines: Timeline.getAllTimelines()
+            // TODO replace with fetching all timelines from disk
+            timelines: [this.timeline.asJson()]
         });
     }
 
     activateListeners(html) {
         super.activateListeners(html);
-        // TODO add any other listeners here
+        // TODO add any other listeners here, probably management buttons?
     }
 }

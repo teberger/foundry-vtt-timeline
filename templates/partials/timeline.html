@@ -1,3 +1,9 @@
+<h1>
+  {{this.name}} {{#if this.era}}({{this.era}}){{/if}}
+</h1>
+<div>
+  {{{this.description}}}
+</div>
 <div class="col-md-8 col-md-offset-2">
   <ul class="timeline">
     {{!-- is there a way to sort? --}}
@@ -13,7 +19,7 @@
                     <div class="date">
                         <div class="history-year">
                             <strong>
-                                {{this.year}} {{this.era}}
+                                {{this.year}} {{../era}}
                             </strong>
                             {{!-- Get the moon phase image and use it here? --}}
                         </div>
