@@ -1,8 +1,6 @@
 /* Set up imports */
-import TimelineManagerClass from "./entities/TimelineManager.js"
-import { TimelineEntry } from "./entities/TimelineEntry.js"
 import { register } from "./config/config.js"
-import TimelineManager from "./entities/TimelineManager.js"
+import TimelineManager from "./apps/TimelineManager.js"
 
 /**
  * Preloads templates for partials
@@ -10,6 +8,7 @@ import TimelineManager from "./entities/TimelineManager.js"
 let preloadTemplates = function() {
     let templates = [
         "templates/partials/timeline.html",
+        "templates/partials/management.html",
         "templates/partials/timeline-entry.html"
     ];
 

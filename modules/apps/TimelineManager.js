@@ -1,14 +1,14 @@
-import Timeline from "./Timeline.js"
+import Timeline from "../entities/Timeline.js"
 
 export default class TimelineManager extends Application {
 
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            id: "forien-quest-log",
+            id: "timeline-management",
             classes: ['forien-quest-log'],
             template: "modules/foundry-timeline/templates/all-timelines.html",
-            width: 900,
-            height: 680,
+            width: 750,
+            height: 580,
             minimizable: true,
             resizable: true,
             title: "Active Timelines",
@@ -19,7 +19,16 @@ export default class TimelineManager extends Application {
 
     _getHeaderButtons() {
         const buttons = super._getHeaderButtons();
-        // TODO [teb] change this if I see a need for additional buttons along the header bar (close, minimize, maximize)
+        if (game.user.isGM) {
+            buttons.unshift({
+                label: "Event",
+                class: "add-event",
+                icon: "fas fa-plus",
+                onclick: function() {
+                    console.debug("Timeline | Add event");
+                }
+            });
+        }
         return buttons;
     }
 
@@ -34,18 +43,6 @@ export default class TimelineManager extends Application {
 
     activateListeners(html) {
         super.activateListeners(html);
-
-        html.on("click", ".new-timeline-btn", () => {
-            console.debug("Timeline | creating new timeline");
-            // Render a new timeline form that will give it a title and start date
-        });
-        html.on("click", ".new-timeline-event-btn", () => {
-            console.debug("Timeline | creating new timeline event");
-            // Render a new timeline event form that will potentially hook into about-time
-        });
-        html.on("click", ".delete-event-btn", () => {
-            console.debug("Timeline | deleted timeline");
-            // need a confirmation button, but deletes the current timeline
-        });
+        // TODO add any other listeners here
     }
 }

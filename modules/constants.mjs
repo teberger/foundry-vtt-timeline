@@ -1,4 +1,4 @@
 let constants = {
-  moduleName: "foundry-timeline"
+    moduleName: "foundry-timeline"
 };
 export default constants;
