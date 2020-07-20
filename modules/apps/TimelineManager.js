@@ -1,10 +1,32 @@
 import Timeline from "../entities/Timeline.js"
+import constants from "../constants.js";
 
 export default class TimelineManager extends Application {
-    //TODO temp timeline to debug
-    timeline = new Timeline();
 
-    // constructor() {}
+    constructor(data = {}, entry = null) {
+        super(data, null);
+        this._timelineFolderId = null;
+        this.allTimelines = [];
+        this.initData(true);
+    }
+
+    initData(refresh = false) {
+        // To load from disk, we need to find  the right journal entry
+        if (this._timelineFolderId === null) {
+            let gameFolder = game.journal.directory.folders.find(f => f.name === constants.timelineFolderName);
+            if (gameFolder === undefined) {
+                Folder.create({
+                    name: constants.timelineFolderName,
+                    type: "JournalEntry",
+                    parent: null
+                });
+                gameFolder = game.journal.directory.folders.find(f => f.name === constants.timelineFolderName);
+            }
+            this._timelineFolderId = gameFolder._id;
+        }
+        //TODO read from disk
+        this.allTimelines = [new Timeline().asJson()];
+    }
 
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -17,7 +39,11 @@ export default class TimelineManager extends Application {
             resizable: true,
             title: "Active Timelines",
             popOut: true,
-            tabs: [{ navSelector: ".log-tabs", contentSelector: ".log-body", initial: "management" }]
+            tabs: [{
+                navSelector: ".log-tabs",
+                contentSelector: ".log-body",
+                initial: "management"
+            }]
         });
     }
 
@@ -41,8 +67,7 @@ export default class TimelineManager extends Application {
         return mergeObject(super.getData(), {
             options: options,
             isGm: game.user.isGM,
-            // TODO replace with fetching all timelines from disk
-            timelines: [this.timeline.asJson()]
+            timelines: this.allTimelines
         });
     }
 

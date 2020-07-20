@@ -25,9 +25,8 @@ Hooks.once('init', () => {
 /**
  * Setting up the main timeline, adding triggers, etc.
  */
-Hooks.once('setup', () => {
+Hooks.once('ready', () => {
     console.debug("Timeline | setting up")
-        //window.TimelineManager = new TimelineManagerClass();
     game.timelineManager = new TimelineManager();
 });
 
@@ -48,4 +47,9 @@ Hooks.on("renderJournalDirectory", (app, html, data) => {
         console.debug("Timeline | Bringing up timeline management window")
         game.timelineManager.render(true);
     });
+
+    // removing the folder from the display so accidents can't happen
+    let folderId = game.timelineManager._timelineFolderId;
+    let folder = html.find(`.folder[data-folder-id="${folderId}"]`);
+    folder.remove();
 });
