@@ -1,40 +1,19 @@
 /* Set up imports */
 import { register } from "./config/config.js"
-import TimelineManager from "./apps/TimelineManager.js"
+import ActiveTimelinesApp from "./apps/ActiveTimelinesApp.js";
+import { timelineFolderId } from "./utils.js"
+import { preloadTemplates, renderTimelineBodyTmpl } from "./hbs-templates.js"
 
-
-/**
- * Preloads templates for partials
- */
-let preloadTemplates = function() {
-    let templates = [
-        "templates/partials/timeline.html",
-        "templates/partials/management.html",
-        "templates/partials/timelineEntry.html"
-    ];
-
-    templates = templates.map(t => `modules/foundry-timeline/${t}`);
-    loadTemplates(templates);
-}
 
 Hooks.once('setup', () => {
     console.debug("Timeline | seting up")
-    game.timelineManager = {}
 })
+
 Hooks.once('init', () => {
     console.debug("Timeline | initializing...")
     register();
     preloadTemplates();
-
-    Handlebars.registerHelper("renderTimelineBody", function(entries) {
-        let template_function = Handlebars.partials['modules/foundry-timeline/templates/partials/timelineEntry.html']
-        return entries.map(function(context, index) {
-            let invert = index % 2 == 0 ? "timeline-entry-inverted" : "";
-            context['invert'] = invert
-            console.debug("Timeline | Rendering content")
-            return template_function(context)
-        }).join('\n');
-    });
+    Handlebars.registerHelper("renderTimelineBody", renderTimelineBodyTmpl);
 })
 
 /**
@@ -42,7 +21,10 @@ Hooks.once('init', () => {
  */
 Hooks.once('ready', () => {
     console.debug("Timeline | ready...")
-    game.timelineManager = new TimelineManager();
+
+    if (timelineFolderId()) {
+        console.debug("Timeline | timeline folder found")
+    }
 });
 
 /**
@@ -60,12 +42,12 @@ Hooks.on("renderJournalDirectory", (app, html, data) => {
 
     button.click(ev => {
         console.debug("Timeline | Bringing up timeline management window")
-        game.timelineManager.render(true);
+        new ActiveTimelinesApp().render(true);
     });
 
     // removing the folder from the display so accidents can't happen
-    let folderId = game.timelineManager.timelineFolderId;
-    console.debug("Timeline | game folder id: " + folderId);
-    console.debug("Timeline | game folder id: " + folderId);
+    folderId = timelineFolderId()
+    let folder = html.find(`.folder[data-folder-id="${folderId}"]`)
     folder.remove();
+    console.debug("Timeline | game folder id: " + folderId);
 });

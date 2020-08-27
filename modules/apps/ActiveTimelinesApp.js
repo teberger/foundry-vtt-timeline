@@ -1,33 +1,9 @@
 import Timeline from "../entities/Timeline.js"
-import constants from "../constants.js";
 
-export default class TimelineManager extends Application {
-    constructor(data = {}, entry = null) {
-        super(data, null);
-        this.timelineFolderId = null;
-        this.allTimelines = [];
-        this.initData(true);
-    }
-
-    getTimelineFolderId() {
-        return this.timelineFolderId;
-    }
-
-    initData(refresh = true) {
-        // To load from disk, we need to find  the right journal entry
-        if (this.timelineFolderId === null) {
-            let gameFolder = game.journal.directory.folders.find(f => f.name === constants.timelineFolderName);
-            if (gameFolder === undefined) {
-                Folder.create({
-                    name: constants.timelineFolderName,
-                    type: "JournalEntry",
-                    parent: null
-                });
-            }
-            gameFolder = game.journal.directory.folders.find(f => f.name === constants.timelineFolderName);
-            this.timelineFolderId = gameFolder._id;
-        }
-        //TODO read from disk
+export default class ActiveTimelinesApp extends Application {
+    allTimelines = [];
+    constructor(data) {
+        super(data);
         this.allTimelines = [new Timeline().asJson()];
     }
 
