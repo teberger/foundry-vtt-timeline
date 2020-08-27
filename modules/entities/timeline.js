@@ -17,9 +17,10 @@ export default class Timeline {
                 month: 8,
                 hours: 21,
                 minutes: 30,
-                eventClass: "Important Event",
+                eventClass: "important",
                 eventType: "Gathering / Conference",
-                eventTitle: "Loyer joined the party"
+                eventTitle: "Loyer joined the party",
+                htmlDescription: "<p>Loyer joins the party</p>"
             },
             {
                 year: 1975,
@@ -29,7 +30,8 @@ export default class Timeline {
                 minutes: 30,
                 eventClass: "Era",
                 eventType: "Gathering / Conference",
-                eventTitle: "Loyer afk"
+                eventTitle: "Loyer afk",
+                htmlDescription: "<p>Loyer goes afk through every session and offers absolutely no input</p>"
             },
             {
                 year: 1973,
@@ -39,7 +41,8 @@ export default class Timeline {
                 minutes: 30,
                 eventClass: "Era",
                 eventType: "Gathering / Conference",
-                eventTitle: "Loyer dies"
+                eventTitle: "Loyer dies",
+                htmlDescription: "<p>I get rid of a problem and destroy the stupid halfling</p>"
             }
         ];
     }

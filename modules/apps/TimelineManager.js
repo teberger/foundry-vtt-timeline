@@ -2,17 +2,20 @@ import Timeline from "../entities/Timeline.js"
 import constants from "../constants.js";
 
 export default class TimelineManager extends Application {
-
     constructor(data = {}, entry = null) {
         super(data, null);
-        this._timelineFolderId = null;
+        this.timelineFolderId = null;
         this.allTimelines = [];
         this.initData(true);
     }
 
-    initData(refresh = false) {
+    getTimelineFolderId() {
+        return this.timelineFolderId;
+    }
+
+    initData(refresh = true) {
         // To load from disk, we need to find  the right journal entry
-        if (this._timelineFolderId === null) {
+        if (this.timelineFolderId === null) {
             let gameFolder = game.journal.directory.folders.find(f => f.name === constants.timelineFolderName);
             if (gameFolder === undefined) {
                 Folder.create({
@@ -20,9 +23,9 @@ export default class TimelineManager extends Application {
                     type: "JournalEntry",
                     parent: null
                 });
-                gameFolder = game.journal.directory.folders.find(f => f.name === constants.timelineFolderName);
             }
-            this._timelineFolderId = gameFolder._id;
+            gameFolder = game.journal.directory.folders.find(f => f.name === constants.timelineFolderName);
+            this.timelineFolderId = gameFolder._id;
         }
         //TODO read from disk
         this.allTimelines = [new Timeline().asJson()];

@@ -1,4 +1,4 @@
-<li class="timeline-entry {{entry-importance}} ">
+<li class="timeline-entry {{entry-importance}} {{invert}} ">
     <div class="tl-circ {{entry-importance}}" data-toggle="tooltip" title=""></div>
     <div class="timeline-panel">
         <div class="tl-heading">
@@ -9,7 +9,7 @@
                     <div class="history-year">
                         <strong>
                             {{!-- Get the current year --}}
-                            1974 GD
+                            {{ year }} GD
                         </strong>
                         {{!-- Get the moon phase image and use it here? Maybe --}}
                     </div>
@@ -18,15 +18,15 @@
                         <span>
                             <div class="history-day">
                                 {{!-- Timeline Day --}}
-                                1
+                                {{ day }}
                             </div>
                             <div class="history-month">
                                 {{!-- Timeline Month --}}
-                                /3
+                                /{{ month }}
                             </div>
                             <div class="history-hour">
                                 {{!-- Timeline TOD --}}
-                                1:30
+                                {{hours}}:{{minutes}}
                             </div>
                         </span>
                     </small>
@@ -35,16 +35,16 @@
             </div>
             <h4>
                 {{!-- Get the title of the timeline entry --}}
-                Loyer joins the party
+                {{ eventTitle }}
                 <br>
                 {{!-- Timeline entry type --}}
-                <i><small>Gathering / Conference</small></i>
+                <i><small>{{ eventType }}</small></i>
             </h4>
         </div>
         <div class="tl-body">
             <div class="history-content">
                 {{!-- get the timeline entry content here --}}
-                <p>A Paladin of Pelor joins the party</p>
+                {{{ htmlDescription }}}
             </div>
         </div>
         <div class="timeline-entry buttons">

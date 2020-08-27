@@ -6,64 +6,7 @@
 </div>
 <div class="col-md-8 col-md-offset-2">
   <ul class="timeline">
-    {{!-- is there a way to sort? --}}
-    {{#each entries}}
     {{!-- render each entry using the timeline-entry.html template --}}
-      <li class="timeline-entry important ">
-        <div class="tl-circ important" data-toggle="tooltip" title="" data-original-title="{{this.eventClass}}"></div>
-        <div class="timeline-panel">
-            <div class="tl-heading">
-                <div class="header-icon">
-                </div>
-                <div class="tl-heading-date">
-                    <div class="date">
-                        <div class="history-year">
-                            <strong>
-                                {{this.year}} {{../era}}
-                            </strong>
-                            {{!-- Get the moon phase image and use it here? --}}
-                        </div>
-                        <br>
-                        <small>
-                            <span>
-                                <div class="history-day">
-                                    {{!-- Timeline Day --}}
-                                    {{this.day}}
-                                </div>
-                                <div class="history-month">
-                                    {{!-- Timeline Month --}}
-                                    /{{this.month}}
-                                </div>
-                                {{#if this.time }}
-                                <div class="history-hour">
-                                    {{!-- Timeline TOD --}}
-                                    {{this.hours}}:{{this.minutes}}
-                                </div>
-                                {{/if}}
-                            </span>
-                        </small>
-                    </div>
-                    <hr>
-                </div>
-                <h4>{{this.eventTitle}}
-                    <br>
-                    {{!-- Timeline entry type --}}
-                    <i><small>{{this.eventType}}</small></i>
-                </h4>
-            </div>
-            <div class="tl-body">
-                <div class="history-content">
-                    {{!-- TODO bring out the timeline entry content here --}}
-                    <p>A Paladin of Pelor joins the party</p>
-                </div>
-            </div>
-            <div class="timeline-entry buttons">
-                {{!-- Hook buttons up to something clickable? Should be in the JS source files --}}
-                <a class="entry-btn-edit"><i class="fa fa-feather"></i></a>
-                <a class="entry-btn-remove"><i class="fa fa-trash"></i></a>
-            </div>
-        </div>
-      </li>
-    {{/each}}
+    {{{ renderTimelineBody this.entries }}}
   </ul>
 </div>

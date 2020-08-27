@@ -1,4 +1,7 @@
 export default class TimelineEntry {
+    constructor() {
+
+    }
 
     /**
      * A comparator for 
