@@ -1,4 +1,7 @@
 import Timeline from "../entities/Timeline.js"
+import * as logger from "../logger.js"
+
+let TITLE = "Active Timelines"
 
 export default class ActiveTimelinesApp extends Application {
     allTimelines = [];
@@ -16,7 +19,7 @@ export default class ActiveTimelinesApp extends Application {
             height: 580,
             minimizable: true,
             resizable: true,
-            title: "Active Timelines",
+            title: TITLE,
             popOut: true,
             tabs: [{
                 navSelector: ".log-tabs",
@@ -34,7 +37,7 @@ export default class ActiveTimelinesApp extends Application {
                 class: "add-event",
                 icon: "fas fa-plus",
                 onclick: function() {
-                    console.debug("Timeline | Add event");
+                    logger.log(logger.DEBUG, "Add event");
                 }
             });
         }

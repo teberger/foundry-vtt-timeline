@@ -1,6 +1,8 @@
 export let constants = {
     moduleName: "foundry-timeline",
-    timelineFolderName: "_all_timelines"
+    timelineFolderName: "_all_timelines",
+    MAX_TAB_TITLE_LENGTH: 14,
+    htmlNoDescription: "<p>No Description given...</p>"
 };
 
 export let isNullOrUndefined = (obj) => {

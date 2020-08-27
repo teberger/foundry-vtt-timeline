@@ -1,11 +1,12 @@
 import TimelineEntry from "./TimelineEntry.js"
+import { constants } from "../utils.js"
 
 export default class Timeline {
     constructor(data = {}, entry = null) {
         this._id = data._id;
-        this.htmlDescription = data.htmlDescription || "<p>No description</p>";
+        this.htmlDescription = data.htmlDescription || constants.htmlNoDescription;
         this.title = data.title || "New Timeline";
-        this.shortName = this.title.length > 14 ? this.title.substring(0, 11) + "..." : this.title;
+        this.shortName = this.title.length > constants.MAX_TAB_TITLE_LENGTH ? this.title.substring(0, constants.MAX_TAB_TITLE_LENGTH - 3) + "..." : this.title;
         this.entries = data.entries || [];
         this.playerVisible = data.playerVisible || false;
         this.era = data.era || "";

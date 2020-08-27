@@ -3,7 +3,7 @@ import { register } from "./config/config.js"
 import ActiveTimelinesApp from "./apps/ActiveTimelinesApp.js";
 import { timelineFolderId } from "./utils.js"
 import { preloadTemplates, renderTimelineBodyTmpl } from "./hbs-templates.js"
-
+import * as logger from "./logger.js"
 
 Hooks.once('setup', () => {
     console.debug("Timeline | seting up")
@@ -23,7 +23,7 @@ Hooks.once('ready', () => {
     console.debug("Timeline | ready...")
 
     if (timelineFolderId()) {
-        console.debug("Timeline | timeline folder found")
+        logger.log(logger.DEBUG, "loaded timeline folder")
     }
 });
 
@@ -31,7 +31,7 @@ Hooks.once('ready', () => {
  * Setting up the button so it is rendered and setting the click events for the button
  */
 Hooks.on("renderJournalDirectory", (app, html, data) => {
-    console.debug("Timeline | Adding button to journal sidebar");
+    logger.log(logger.DEBUG, "Adding button to journal sidebar");
     const button = $("<button class='timeline-button'><i class='fas fa-code-branch'></i>Manage Timelines</button>");
     let footer = html.find(".directory-footer");
     if (footer.length === 0) {
@@ -41,13 +41,13 @@ Hooks.on("renderJournalDirectory", (app, html, data) => {
     footer.append(button);
 
     button.click(ev => {
-        console.debug("Timeline | Bringing up timeline management window")
+        logger.log(logger.DEBUG, "Bringing up timeline management window ")
         new ActiveTimelinesApp().render(true);
     });
 
     // removing the folder from the display so accidents can't happen
-    folderId = timelineFolderId()
+    let folderId = timelineFolderId()
     let folder = html.find(`.folder[data-folder-id="${folderId}"]`)
     folder.remove();
-    console.debug("Timeline | game folder id: " + folderId);
+    logger.log(logger.DEBUG, "game folder id: ", folderId);
 });
