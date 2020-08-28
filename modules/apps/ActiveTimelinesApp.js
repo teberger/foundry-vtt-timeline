@@ -1,5 +1,6 @@
 import Timeline from "../entities/Timeline.js"
 import * as logger from "../logger.js"
+import NewTimelineForm from "./NewTimelineForm.js";
 
 let TITLE = "Active Timelines"
 
@@ -55,6 +56,15 @@ export default class ActiveTimelinesApp extends Application {
 
     activateListeners(html) {
         super.activateListeners(html);
+
+        html.on("click", ".new-timeline-button", () => {
+            new NewTimelineForm().render(true);
+        });
+
+        html.on('click', '.delete-timeline-button', () => {
+            logger.log(logger.DEBUG, "Bringing up delete timeline page, TODO doens't do anything yet")
+        });
+
         // TODO add any other listeners here, probably management buttons?
     }
 }
