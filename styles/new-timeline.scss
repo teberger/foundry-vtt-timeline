@@ -1,0 +1,26 @@
+#new-timeline-form {
+    .grid-container {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: auto 420px auto;
+        gap: 1px 1px;
+        grid-template-areas: "." "." "footer";
+        .footer {
+            grid-area: footer;
+        }
+    }
+    fieldset {
+        box-sizing: border-box;
+        margin: 0px;
+        &.tinymce-fieldset {
+            min-height: 240px;
+            border: none;
+            .editor {
+                height: 100%;
+                .editor-content {
+                    height: 100%;
+                }
+            }
+        }
+    }
+}
