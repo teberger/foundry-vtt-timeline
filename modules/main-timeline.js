@@ -1,7 +1,7 @@
 /* Set up imports */
 import { register } from "./config/config.js"
 import ActiveTimelinesApp from "./apps/ActiveTimelinesApp.js";
-import { timelineFolderId } from "./utils.js"
+import { timelineFolderId, constants } from "./utils.js"
 import { preloadTemplates, renderTimelineBodyTmpl } from "./hbs-templates.js"
 import * as logger from "./logger.js"
 
@@ -46,8 +46,10 @@ Hooks.on("renderJournalDirectory", (app, html, data) => {
     });
 
     // removing the folder from the display so accidents can't happen
-    let folderId = timelineFolderId()
-    let folder = html.find(`.folder[data-folder-id="${folderId}"]`)
-    folder.remove();
-    logger.log(logger.DEBUG, "game folder id: ", folderId);
+    if (!constants.DEBUG_MODE) {
+        let folderId = timelineFolderId()
+        let folder = html.find(`.folder[data-folder-id="${folderId}"]`)
+        folder.remove();
+        logger.log(logger.DEBUG, "game folder id: ", folderId);
+    }
 });
