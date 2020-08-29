@@ -4,20 +4,20 @@ import * as logger from "../logger.js"
 export default class DeleteTimelineForm extends Application {
     allTimelines = [];
 
-    constructor(options = {}) {
+    constructor(options = {}, parent) {
         super(options);
-        this.refreshData()
+        this.parent = parent;
+        this.refreshData();
     }
 
     refreshData() {
         this.allTimelines = [];
-        let f = timelineFolder();
-        for (let idx = 0; idx < f.children.length; idx++) {
+        timelineFolder().children.map(entry => {
             this.allTimelines.push({
-                id: f.children[idx]._id,
-                name: f.children[idx].data.name
+                id: entry._id,
+                name: entry.data.name
             })
-        }
+        });
     }
 
     static get defaultOptions() {
@@ -60,6 +60,7 @@ export default class DeleteTimelineForm extends Application {
                             }
                             folder.delete().then(() => {
                                 this.refreshData();
+                                this.parent.render(true)
                                 this.render(true)
                             });
                         }
@@ -72,4 +73,10 @@ export default class DeleteTimelineForm extends Application {
             }).render(true)
         });
     }
+
+    render(force, options) {
+        this.refreshData();
+        super.render(force, options);
+    }
+
 };

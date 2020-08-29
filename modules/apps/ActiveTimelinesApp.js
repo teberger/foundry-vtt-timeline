@@ -1,7 +1,7 @@
-import Timeline from "../entities/Timeline.js"
+import Timeline from "../entities/timeline.js"
 import * as logger from "../logger.js"
 import AddTimelineForm from "./AddTimelineForm.js";
-import { constants, isNullOrUndefined } from "../utils.js"
+import { constants, isNullOrUndefined, timelineFolder } from "../utils.js"
 import DeleteTimelineForm from "./DeleteTimelinesForm.js";
 
 let TITLE = "Active Timelines"
@@ -10,7 +10,29 @@ export default class ActiveTimelinesApp extends Application {
     allTimelines = [];
     constructor(data) {
         super(data);
-        this.allTimelines = [new Timeline().asJson()];
+        this.refreshData()
+    }
+
+    refreshData() {
+        this.allTimelines = timelineFolder().children.map(entry => {
+            logger.log(logger.DEBUG, "Reading timeline data for ", entry.data.name);
+            // get _metadata journal entry
+            // read the content
+            // use it to instantiate the Timeline
+            let metadataJournal = entry.content.find(e => {
+                return e.name === constants.TIMELINE_METADATA_JOURNAL_ENTRY_NAME
+            })
+
+            let data = JSON.parse(metadataJournal.data.content)
+
+            return new Timeline(mergeObject(data, {
+                title: entry.data.name,
+                htmlDescription: data.htmlDescription,
+                era: data.era,
+                era_short: data.era_short,
+                folder: entry
+            }))
+        })
     }
 
     static get defaultOptions() {
@@ -62,22 +84,30 @@ export default class ActiveTimelinesApp extends Application {
         return mergeObject(super.getData(), {
             options: options,
             isGm: game.user.isGM,
-            timelines: this.allTimelines
+            timelines: this.allTimelines.reduce((prev, e) => { return prev.concat(e.asJson()) }, [])
         });
+
+
     }
 
     activateListeners(html) {
         super.activateListeners(html);
 
         html.on("click", ".new-timeline-button", () => {
-            new AddTimelineForm({}).render(true);
+            new AddTimelineForm({}, this).render(true);
         });
 
         html.on('click', '.delete-timeline-button', () => {
             logger.log(logger.DEBUG, "Bringing up delete timeline page, TODO doens't do anything yet")
-            new DeleteTimelineForm({}).render(true);
+            new DeleteTimelineForm({}, this).render(true);
+            this.render(true)
         });
 
         // TODO add any other listeners here, probably management buttons?
+    }
+
+    render(force, options) {
+        this.refreshData()
+        super.render(force, options)
     }
 }

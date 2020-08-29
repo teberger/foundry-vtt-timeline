@@ -7,7 +7,7 @@ export let constants = {
     TIMELINE_METADATA_JOURNAL_ENTRY_NAME: "_metadata",
     TIMELINE_METADATA_ERA: "era",
     TIMELINE_METADATA_ERA_INITIALS: "era_initials",
-    TIMELINE_METADATA_DESCRIPTION: "descriptionHtml"
+    TIMELINE_METADATA_DESCRIPTION: "htmlDescription"
 };
 
 export let isNullOrUndefined = (obj) => {

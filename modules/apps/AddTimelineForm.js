@@ -4,6 +4,11 @@ import { timelineFolderId, constants } from "../utils.js"
  * 
  */
 export default class AddTimelineForm extends FormApplication {
+    constructor(data, parent) {
+        super(data)
+        this.parent = parent
+    }
+
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             id: 'new-timeline-form',
@@ -25,7 +30,7 @@ export default class AddTimelineForm extends FormApplication {
         let title = formData.title
         let era = formData.era === undefined ? "" : formData.era
         let era_initials = formData.era_initials === undefined ? "" : formData.era_initials
-        let descriptionHtml = formData.description === undefined ? "" : formData.description
+        let htmlDescription = formData.description === undefined ? "" : formData.description
 
         logger.log(logger.DEBUG, "Creating new timeline titled ", title.toString());
 
@@ -41,9 +46,9 @@ export default class AddTimelineForm extends FormApplication {
         }
 
         let data = {}
-        data[constants.TIMELINE_FOLDER_NAME] = era;
+        data[constants.TIMELINE_METADATA_ERA] = era;
         data[constants.TIMELINE_METADATA_ERA_INITIALS] = era_initials;
-        data[constants.TIMELINE_METADATA_DESCRIPTION] = descriptionHtml;
+        data[constants.TIMELINE_METADATA_DESCRIPTION] = htmlDescription;
 
         return Folder.create({
             name: title,
@@ -58,10 +63,11 @@ export default class AddTimelineForm extends FormApplication {
                 permission: { default: 0 }
             }).then(() => {
                 logger.log(logger.INFO, "Metadata for ", title, " timeline created")
+                this.parent.render(true);
             }, () => {
                 logger.log(logger.WARN, "Metadata for ", title, " timeline could not be created! This could lead to undesireable affects")
             })
-            this.close()
+            this.close();
         });
     }
 }

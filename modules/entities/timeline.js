@@ -3,21 +3,23 @@ import { constants } from "../utils.js"
 
 export default class Timeline {
     constructor(data = {}, entry = null) {
-        this._id = data._id;
+        this.folder = data.folder;
         this.htmlDescription = data.htmlDescription || constants.HTML_NO_DESCRIPTION;
         this.title = data.title || "New Timeline";
         this.shortName = this.title.length > constants.MAX_TAB_TITLE_LENGTH ? this.title.substring(0, constants.MAX_TAB_TITLE_LENGTH - 3) + "..." : this.title;
-        this.entries = data.entries || [];
+        this.entries = data.entries || []; // TODO read from this.folderId
         this.playerVisible = data.playerVisible || false;
         this.era = data.era || "";
+        this.era_short = data.era_short || "";
 
         // TODO delete this and load from disk instead
         this.entries = [{
-                year: 1974,
+                year: 1975,
                 day: 16,
                 month: 8,
                 hours: 21,
                 minutes: 30,
+                era_short: "GD",
                 eventClass: "important",
                 eventType: "Gathering / Conference",
                 eventTitle: "Loyer joined the party",
@@ -29,17 +31,19 @@ export default class Timeline {
                 month: 9,
                 hours: 21,
                 minutes: 30,
+                era_short: "GD",
                 eventClass: "Era",
                 eventType: "Gathering / Conference",
                 eventTitle: "Loyer afk",
                 htmlDescription: "<p>Loyer goes afk through every session and offers absolutely no input</p>"
             },
             {
-                year: 1973,
+                year: 1975,
                 day: 17,
                 month: 9,
                 hours: 21,
                 minutes: 30,
+                era_short: "GD",
                 eventClass: "Era",
                 eventType: "Gathering / Conference",
                 eventTitle: "Loyer dies",
