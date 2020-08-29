@@ -1,6 +1,8 @@
 import Timeline from "../entities/Timeline.js"
 import * as logger from "../logger.js"
-import NewTimelineForm from "./NewTimelineForm.js";
+import AddTimelineForm from "./AddTimelineForm.js";
+import { constants, isNullOrUndefined } from "../utils.js"
+import DeleteTimelineForm from "./DeleteTimelinesForm.js";
 
 let TITLE = "Active Timelines"
 
@@ -36,9 +38,19 @@ export default class ActiveTimelinesApp extends Application {
             buttons.unshift({
                 label: "Event",
                 class: "add-event",
+                parent: this,
                 icon: "fas fa-plus",
                 onclick: function() {
-                    logger.log(logger.DEBUG, "Add event");
+                    let timelineName = this.parent._tabs[0].active;
+                    let folder = game.journal.directory.folders.find(f => f.name === timelineName)
+
+                    if (!isNullOrUndefined(folder)) {
+                        let folderId = folder._id
+                        logger.log(logger.INFO, "Add event to timeline's folder ", folderId);
+                        // new AddEventForm({ folderId: folderId }).render(true)
+                    } else {
+                        logger.log(logger.ERR, "Could not find timeline folder? Something bad has happened in " + constants.TIMELINE_FOLDER_NAME);
+                    }
                 }
             });
         }
@@ -58,11 +70,12 @@ export default class ActiveTimelinesApp extends Application {
         super.activateListeners(html);
 
         html.on("click", ".new-timeline-button", () => {
-            new NewTimelineForm().render(true);
+            new AddTimelineForm({}).render(true);
         });
 
         html.on('click', '.delete-timeline-button', () => {
             logger.log(logger.DEBUG, "Bringing up delete timeline page, TODO doens't do anything yet")
+            new DeleteTimelineForm({}).render(true);
         });
 
         // TODO add any other listeners here, probably management buttons?

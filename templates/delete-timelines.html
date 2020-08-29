@@ -1,0 +1,10 @@
+<div><h2>Known Timelines</h2>
+<div class="timelines list">
+{{#each timelines }}
+  <div class="timeline-entry">
+    <span class="del-btn" id="{{this.id}}" target="{{this.id}}"><i class="fas fa-times"></i></span>
+    <span class="name editable" target="{{this.id}}">{{this.name}}</span>
+  </div>
+{{/each }}
+</div>
+</div>
