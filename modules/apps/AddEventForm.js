@@ -24,6 +24,7 @@ export default class AddEventForm extends FormApplication {
     async _updateObject(event, formData, x) {
         logger.log(logger.DEBUG, "Adding journal entry to '", this.parentTimelineFolder.data.name, "'")
 
+        let playerVisible = formData.playerVisible || false;
         let time = isNullOrUndefined(formData.timeString) ?
             event.target.elements.timeString.getAttribute('defaultValue') :
             formData.timeString;
@@ -45,7 +46,7 @@ export default class AddEventForm extends FormApplication {
             name: data.eventTitle,
             content: JSON.stringify(data),
             folder: this.parentTimelineFolder._id,
-            permission: { default: 0 }
+            permission: { default: playerVisible ? c.PERMISSION_OBSERVER : c.PERMISSION_NONE }
         }).then(() => {
             logger.log(logger.INFO, "Event created")
             this.activeTimelineApp.render(true)

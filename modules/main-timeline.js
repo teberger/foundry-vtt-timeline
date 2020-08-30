@@ -2,7 +2,7 @@
 import { register } from "./config/config.js"
 import ActiveTimelinesApp from "./apps/ActiveTimelinesApp.js";
 import { timelineFolderId, constants } from "./utils.js"
-import { preloadTemplates, renderTimelineBodyTmpl } from "./hbs-templates.js"
+import { preloadTemplates, renderTimelineBodyTmpl, strEqual } from "./hbs-templates.js"
 import * as logger from "./logger.js"
 
 Hooks.once('setup', () => {
@@ -14,6 +14,7 @@ Hooks.once('init', () => {
     register();
     preloadTemplates();
     Handlebars.registerHelper("renderTimelineBody", renderTimelineBodyTmpl);
+    Handlebars.registerHelper("strEqual", strEqual);
 })
 
 /**
@@ -46,7 +47,7 @@ Hooks.on("renderJournalDirectory", (app, html, data) => {
     });
 
     // removing the folder from the display so accidents can't happen
-    if (!constants.DEBUG_MODE) {
+    if (!constants.DEBUG_MODE || !game.user.isGM) {
         let folderId = timelineFolderId()
         let folder = html.find(`.folder[data-folder-id="${folderId}"]`)
         folder.remove();

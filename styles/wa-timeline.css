@@ -65,7 +65,7 @@
 }
 
 .milestone .tl-heading-date {
-    margin-top: 30px
+    margin-top: 10px
 }
 
 .tl-heading-date .display-date {
@@ -265,7 +265,8 @@
 }
 
 .timeline .milestone {
-    border-top: 8px #000 solid
+    border-top: 8px #000 solid;
+    padding: 20px;
 }
 
 .timeline .milestone .header-icon {

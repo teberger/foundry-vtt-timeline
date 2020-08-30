@@ -3,7 +3,6 @@ import * as logger from "../logger.js"
 import AddTimelineForm from "./AddTimelineForm.js";
 import AddEventForm from "./AddEventForm.js";
 import { constants, isNullOrUndefined, timelineFolder } from "../utils.js"
-import DeleteTimelineForm from "./DeleteTimelinesForm.js";
 
 let TITLE = "Active Timelines"
 
@@ -62,6 +61,56 @@ export default class ActiveTimelinesApp extends Application {
         const buttons = super._getHeaderButtons();
         if (game.user.isGM) {
             buttons.unshift({
+                label: "Delete Timeline",
+                class: "delete-timeline",
+                parent: this,
+                icon: "fas fa-calendar-times",
+                onclick: function() {
+                    let timelineName = this.parent._tabs[0].active;
+                    let folder = game.journal.directory.folders.find(f => f.name === timelineName)
+                    let folderId = folder._id;
+                    new Dialog({
+                        title: "Are you sure?",
+                        content: "<h3>Deleting the timeline will also delete all entries in the timeline, are you sure?</h3>",
+                        buttons: {
+                            yes: {
+                                icon: `<i class="far fa-trash-alt"></i>`,
+                                label: "Yes, delete",
+                                callback: () => {
+                                    let folder = game.journal.directory.folders.find(f => f._id === folderId);
+                                    logger.log(logger.DEBUG, "Deleting folder id", folderId);
+
+                                    let rootDelete = folder.delete();
+                                    folder.content.reduce((prev, next) => {
+                                        return prev.then(() => {
+                                            return next.delete();
+                                        })
+                                    }, rootDelete);
+
+                                    rootDelete.then(() => {
+                                        this.parent.render(true)
+                                    });
+                                }
+                            },
+                            no: {
+                                icon: `<i class="fas fa-undo"></i>`,
+                                label: "Wait!"
+                            }
+                        }
+                    }).render(true)
+                    this.parent.render(true)
+                }
+            });
+            buttons.unshift({
+                label: "New Timeline",
+                class: "add-timeline",
+                parent: this,
+                icon: "fas fa-calendar-plus",
+                onclick: function() {
+                    new AddTimelineForm({}, this.parent).render(true);
+                }
+            });
+            buttons.unshift({
                 label: "Event",
                 class: "add-event",
                 parent: this,
@@ -90,22 +139,6 @@ export default class ActiveTimelinesApp extends Application {
         });
 
 
-    }
-
-    activateListeners(html) {
-        super.activateListeners(html);
-
-        html.on("click", ".new-timeline-button", () => {
-            new AddTimelineForm({}, this).render(true);
-        });
-
-        html.on('click', '.delete-timeline-button', () => {
-            logger.log(logger.DEBUG, "Bringing up delete timeline page, TODO doens't do anything yet")
-            new DeleteTimelineForm({}, this).render(true);
-            this.render(true)
-        });
-
-        // TODO add any other listeners here, probably management buttons?
     }
 
     render(force, options) {

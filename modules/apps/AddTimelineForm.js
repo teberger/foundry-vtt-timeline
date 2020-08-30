@@ -1,5 +1,6 @@
 import * as logger from "../logger.js"
-import { timelineFolderId, constants } from "../utils.js"
+import { timelineFolderId, constants, isNullOrUndefined } from "../utils.js"
+
 /**
  * 
  */
@@ -26,9 +27,10 @@ export default class AddTimelineForm extends FormApplication {
 
     async _updateObject(event, formData) {
         let title = formData.title
-        let era = formData.era === undefined ? "" : formData.era
-        let era_initials = formData.era_initials === undefined ? "" : formData.era_initials
-        let htmlDescription = formData.description === undefined ? "" : formData.description
+        let playerVisible = formData.playerVisible;
+        let era = isNullOrUndefined(formData.era) ? "" : formData.era
+        let era_initials = isNullOrUndefined(formData.era_initials) ? "" : formData.era_initials
+        let htmlDescription = isNullOrUndefined(this.description) ? "" : formData.description
 
         logger.log(logger.DEBUG, "Creating new timeline titled ", title.toString());
 
@@ -44,9 +46,10 @@ export default class AddTimelineForm extends FormApplication {
         }
 
         let data = {}
+        data[constants.TIMEILNE_METADATA_PLAYER_VISIBLE] = playerVisible
         data[constants.TIMELINE_METADATA_ERA] = era;
         data[constants.TIMELINE_METADATA_ERA_INITIALS] = era_initials;
-        data[constants.TIMELINE_METADATA_DESCRIPTION] = htmlDescription;
+        data[constants.TIMELINE_METADATA_DESCRIPTION] = htmlDescription; // comes from _onEditorSave()
 
         return Folder.create({
             name: title,
@@ -58,7 +61,7 @@ export default class AddTimelineForm extends FormApplication {
                 name: constants.TIMELINE_METADATA_JOURNAL_ENTRY_NAME,
                 content: JSON.stringify(data),
                 folder: entry._id,
-                permission: { default: 0 }
+                permission: { default: constants.OBSERVER }
             }).then(() => {
                 logger.log(logger.INFO, "Metadata for ", title, " timeline created")
                 this.parent.render(true);

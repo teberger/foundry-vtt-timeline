@@ -1,8 +1,5 @@
 <div class="quest-log bookmarks">
   <nav class="log-tabs tabs bookmarks" data-group="primary">
-    {{#if isGm }}
-      <a class="item" data-tab="management">Management</a>
-    {{/if}}
     {{#each timelines}}
       {{#if (or ../isGm this.playerVisible)}}
         <a class="item" data-tab="{{this.name}}">{{this.shortName}}</a>
@@ -10,15 +7,10 @@
     {{/each}}
   </nav>
   <section class="log-body tab bookmarks">
-    {{#if isGm }}
-      <div class="tab" data-group="primary" data-tab="management">
-        {{> "modules/foundry-timeline/templates/partials/management.html" }}
-      </div>
-    {{/if}}
     {{#each timelines }}
       {{#if (or ../isGm this.playerVisible)}}
         <div class="tab in-progress" data-group="primary" data-tab="{{this.name}}">
-          {{> "modules/foundry-timeline/templates/partials/timeline.html" entries=this.entries era=this.era era_short=this.era_short}}
+          {{> "modules/foundry-timeline/templates/partials/timeline.html" entries=this.entries era=this.era era_short=this.era_short isGm=this.isGm}}
         </div>
       {{/if}}
     {{/each}}
