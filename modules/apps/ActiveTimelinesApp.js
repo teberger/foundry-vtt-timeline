@@ -1,7 +1,8 @@
-import Timeline from "../entities/Timeline.js"
+import Timeline from "../entities/timeline.js"
 import * as logger from "../logger.js"
 import AddTimelineForm from "./AddTimelineForm.js";
-import { constants, isNullOrUndefined } from "../utils.js"
+import AddEventForm from "./AddEventForm.js";
+import { constants, isNullOrUndefined, timelineFolder } from "../utils.js"
 import DeleteTimelineForm from "./DeleteTimelinesForm.js";
 
 let TITLE = "Active Timelines"
@@ -10,7 +11,32 @@ export default class ActiveTimelinesApp extends Application {
     allTimelines = [];
     constructor(data) {
         super(data);
-        this.allTimelines = [new Timeline().asJson()];
+        this.refreshData()
+    }
+
+    /**
+     * TODO could be a performance issue to access all these different files at the same time. Maybe refactor here
+     */
+    refreshData() {
+        this.allTimelines = timelineFolder().children.map(entry => {
+            logger.log(logger.DEBUG, "Reading timeline data for ", entry.data.name);
+            // get _metadata journal entry
+            let metadataJournal = entry.content.find(e => {
+                return e.name === constants.TIMELINE_METADATA_JOURNAL_ENTRY_NAME
+            })
+
+            // read the content
+            let data = JSON.parse(metadataJournal.data.content)
+
+            // use it to instantiate the Timeline
+            return new Timeline(mergeObject(data, {
+                title: entry.data.name,
+                htmlDescription: data.htmlDescription,
+                era: data.era,
+                era_short: data.era_short,
+                folder: entry
+            }))
+        })
     }
 
     static get defaultOptions() {
@@ -45,9 +71,7 @@ export default class ActiveTimelinesApp extends Application {
                     let folder = game.journal.directory.folders.find(f => f.name === timelineName)
 
                     if (!isNullOrUndefined(folder)) {
-                        let folderId = folder._id
-                        logger.log(logger.INFO, "Add event to timeline's folder ", folderId);
-                        // new AddEventForm({ folderId: folderId }).render(true)
+                        new AddEventForm({ parentTimelineFolder: folder }, this.parent).render(true)
                     } else {
                         logger.log(logger.ERR, "Could not find timeline folder? Something bad has happened in " + constants.TIMELINE_FOLDER_NAME);
                     }
@@ -62,22 +86,30 @@ export default class ActiveTimelinesApp extends Application {
         return mergeObject(super.getData(), {
             options: options,
             isGm: game.user.isGM,
-            timelines: this.allTimelines
+            timelines: this.allTimelines.reduce((prev, e) => { return prev.concat(e.asJson()) }, [])
         });
+
+
     }
 
     activateListeners(html) {
         super.activateListeners(html);
 
         html.on("click", ".new-timeline-button", () => {
-            new AddTimelineForm({}).render(true);
+            new AddTimelineForm({}, this).render(true);
         });
 
         html.on('click', '.delete-timeline-button', () => {
             logger.log(logger.DEBUG, "Bringing up delete timeline page, TODO doens't do anything yet")
-            new DeleteTimelineForm({}).render(true);
+            new DeleteTimelineForm({}, this).render(true);
+            this.render(true)
         });
 
         // TODO add any other listeners here, probably management buttons?
+    }
+
+    render(force, options) {
+        this.refreshData()
+        super.render(force, options)
     }
 }

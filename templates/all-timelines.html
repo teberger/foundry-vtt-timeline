@@ -18,7 +18,7 @@
     {{#each timelines }}
       {{#if (or ../isGm this.playerVisible)}}
         <div class="tab in-progress" data-group="primary" data-tab="{{this.name}}">
-          {{> "modules/foundry-timeline/templates/partials/timeline.html" entries=this.entries era=this.era}}
+          {{> "modules/foundry-timeline/templates/partials/timeline.html" entries=this.entries era=this.era era_short=this.era_short}}
         </div>
       {{/if}}
     {{/each}}

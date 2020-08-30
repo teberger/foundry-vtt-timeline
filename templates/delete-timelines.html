@@ -2,7 +2,7 @@
 <div class="timelines list">
 {{#each timelines }}
   <div class="timeline-entry">
-    <span class="del-btn" id="{{this.id}}" target="{{this.id}}"><i class="fas fa-times"></i></span>
+    <a class="del-btn" id="{{this.id}}" target="{{this.id}}"><i class="fas fa-times"></i></a>
     <span class="name editable" target="{{this.id}}">{{this.name}}</span>
   </div>
 {{/each }}

@@ -3,53 +3,23 @@ import { constants } from "../utils.js"
 
 export default class Timeline {
     constructor(data = {}, entry = null) {
-        this._id = data._id;
+        this.folder = data.folder;
         this.htmlDescription = data.htmlDescription || constants.HTML_NO_DESCRIPTION;
         this.title = data.title || "New Timeline";
         this.shortName = this.title.length > constants.MAX_TAB_TITLE_LENGTH ? this.title.substring(0, constants.MAX_TAB_TITLE_LENGTH - 3) + "..." : this.title;
-        this.entries = data.entries || [];
+        this.entries = data.entries || []; // TODO read from this.folderId
         this.playerVisible = data.playerVisible || false;
         this.era = data.era || "";
-
-        // TODO delete this and load from disk instead
-        this.entries = [{
-                year: 1974,
-                day: 16,
-                month: 8,
-                hours: 21,
-                minutes: 30,
-                eventClass: "important",
-                eventType: "Gathering / Conference",
-                eventTitle: "Loyer joined the party",
-                htmlDescription: "<p>Loyer joins the party</p>"
-            },
-            {
-                year: 1975,
-                day: 18,
-                month: 9,
-                hours: 21,
-                minutes: 30,
-                eventClass: "Era",
-                eventType: "Gathering / Conference",
-                eventTitle: "Loyer afk",
-                htmlDescription: "<p>Loyer goes afk through every session and offers absolutely no input</p>"
-            },
-            {
-                year: 1973,
-                day: 17,
-                month: 9,
-                hours: 21,
-                minutes: 30,
-                eventClass: "Era",
-                eventType: "Gathering / Conference",
-                eventTitle: "Loyer dies",
-                htmlDescription: "<p>I get rid of a problem and destroy the stupid halfling</p>"
-            }
-        ];
+        this.era_short = data.era_short || "";
+        this.reload();
     }
 
     reload() {
-        //TODO read from disk using some ID
+        this.folder.content.map(entry => {
+            if (entry.name !== constants.TIMELINE_METADATA_JOURNAL_ENTRY_NAME) {
+                this.entries.push(new TimelineEntry(JSON.parse(entry.data.content)));
+            }
+        });
     }
 
     /**
@@ -69,6 +39,7 @@ export default class Timeline {
             name: this.title,
             shortName: this.shortName,
             era: this.era,
+            era_short: this.era_short,
             description: TextEditor.enrichHTML(this.htmlDescription),
             playerVisible: this.playerVisible,
             entries: this.entries

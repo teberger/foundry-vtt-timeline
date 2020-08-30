@@ -8,4 +8,5 @@ $border-active: #833;
 $footer-padding: 4px;
 $footer-size: 32px+2*$footer-padding;
 @import 'timeline-management.scss',
-'new-timeline.scss';
+'new-timeline.scss',
+'new-event.scss';

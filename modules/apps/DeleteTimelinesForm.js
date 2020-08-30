@@ -4,20 +4,20 @@ import * as logger from "../logger.js"
 export default class DeleteTimelineForm extends Application {
     allTimelines = [];
 
-    constructor(options = {}) {
+    constructor(options = {}, parent) {
         super(options);
-        this.refreshData()
+        this.parent = parent;
+        this.refreshData();
     }
 
     refreshData() {
         this.allTimelines = [];
-        let f = timelineFolder();
-        for (let idx = 0; idx < f.children.length; idx++) {
+        timelineFolder().children.map(entry => {
             this.allTimelines.push({
-                id: f.children[idx]._id,
-                name: f.children[idx].data.name
+                id: entry._id,
+                name: entry.data.name
             })
-        }
+        });
     }
 
     static get defaultOptions() {
@@ -53,13 +53,17 @@ export default class DeleteTimelineForm extends Application {
                         callback: () => {
                             let folder = game.journal.directory.folders.find(f => f._id === folderId);
                             logger.log(logger.ERR, "Deleting folder id", folderId);
-                            logger.log(logger.DEBUG, folder.collection);
 
-                            for (let x = 0; x < folder.content.length; x++) {
-                                folder.content[x].delete()
-                            }
-                            folder.delete().then(() => {
+                            let rootDelete = folder.delete();
+                            folder.content.reduce((prev, next) => {
+                                return prev.then(() => {
+                                    return next.delete();
+                                })
+                            }, rootDelete);
+
+                            rootDelete.then(() => {
                                 this.refreshData();
+                                this.parent.render(true)
                                 this.render(true)
                             });
                         }
@@ -72,4 +76,10 @@ export default class DeleteTimelineForm extends Application {
             }).render(true)
         });
     }
+
+    render(force, options) {
+        this.refreshData();
+        super.render(force, options);
+    }
+
 };
