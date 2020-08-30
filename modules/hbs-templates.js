@@ -22,3 +22,11 @@ export let renderTimelineBodyTmpl = function(entries, era_short) {
         return template_function(context)
     }).join('\n');
 };
+
+export let strEqual = function(arg1, arg2, options) {
+    if (arg1 === arg2) {
+        return options.fn(this);
+    } else {
+        return options.inverse(this);
+    }
+};

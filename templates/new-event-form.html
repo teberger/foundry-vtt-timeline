@@ -1,6 +1,8 @@
 <form>
     <div class="grid-container">
         <fieldset>
+            <input type="checkbox" class="player-visible" name="playerVisible" checked />
+            <label for="playerVisible"><b>Player visible event?</b></label><br>
             <input type="checkbox" class="use-about-time-checkbox" {{#if useAboutTime }} checked {{/if}}
                 {{#if aboutTimeEnabled }}{{else}}disabled{{/if}} />
             <label for="useAboutTime"><b>Use current AboutTime?</b></label><br>

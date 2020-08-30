@@ -1,9 +1,12 @@
 <li class="timeline-entry {{eventClass}} {{invert}} ">
+    {{#strEqual eventClass "milestone" }}
+    <div class="milestone-panel">
+    {{else}}
     <div class="tl-circ {{eventClass}}" data-toggle="tooltip" title=""></div>
     <div class="timeline-panel">
+    {{/strEqual }}
         <div class="tl-heading">
-            <div class="header-icon">
-            </div>
+            {{#strEqual eventClass "milestone"}}{{else}}<div class="header-icon"> </div>{{/strEqual}}
             <div class="tl-heading-date">
                 <div class="date">
                     <div class="history-year">
@@ -47,10 +50,12 @@
                 {{{ htmlDescription }}}
             </div>
         </div>
+        {{#if isGm }}
         <div class="timeline-entry buttons">
             {{!-- Hook buttons up to something clickable? Probably should be in the JS source files --}}
             <a class="entry-btn-edit"><i class="fa fa-feather"></i></a>
             <a class="entry-btn-remove"><i class="fa fa-trash"></i></a>
         </div>
+        {{/if}}
     </div>
 </li>
