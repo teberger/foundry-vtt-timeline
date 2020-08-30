@@ -29,8 +29,8 @@ export default class AddTimelineForm extends FormApplication {
         let title = formData.title
         let playerVisible = formData.playerVisible;
         let era = isNullOrUndefined(formData.era) ? "" : formData.era
-        let era_initials = isNullOrUndefined(formData.era_initials) ? "" : formData.era_initials
-        let htmlDescription = isNullOrUndefined(this.description) ? "" : formData.description
+        let era_initials = isNullOrUndefined(formData.era_initials) ? "" : formData.era_initials;
+        let htmlDescription = isNullOrUndefined(this.description) ? "" : this.description;
 
         logger.log(logger.DEBUG, "Creating new timeline titled ", title.toString());
 
@@ -61,7 +61,7 @@ export default class AddTimelineForm extends FormApplication {
                 name: constants.TIMELINE_METADATA_JOURNAL_ENTRY_NAME,
                 content: JSON.stringify(data),
                 folder: entry._id,
-                permission: { default: constants.OBSERVER }
+                permission: { default: constants.PERMISSION_OBSERVER }
             }).then(() => {
                 logger.log(logger.INFO, "Metadata for ", title, " timeline created")
                 this.parent.render(true);
