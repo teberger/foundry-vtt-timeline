@@ -53,12 +53,15 @@ export default class DeleteTimelineForm extends Application {
                         callback: () => {
                             let folder = game.journal.directory.folders.find(f => f._id === folderId);
                             logger.log(logger.ERR, "Deleting folder id", folderId);
-                            logger.log(logger.DEBUG, folder.collection);
 
-                            for (let x = 0; x < folder.content.length; x++) {
-                                folder.content[x].delete()
-                            }
-                            folder.delete().then(() => {
+                            let rootDelete = folder.delete();
+                            folder.content.reduce((prev, next) => {
+                                return prev.then(() => {
+                                    return next.delete();
+                                })
+                            }, rootDelete);
+
+                            rootDelete.then(() => {
                                 this.refreshData();
                                 this.parent.render(true)
                                 this.render(true)

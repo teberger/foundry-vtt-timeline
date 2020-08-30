@@ -1,12 +1,13 @@
-<h1>
-  {{this.name}} {{#if this.era}}({{this.era}}){{/if}}
-</h1>
+<h1> {{this.name}} </h1>
+{{#if this.era}}
+<h3>{{this.era}}</h3>
+{{/if}}
 <div>
   {{{this.description}}}
 </div>
 <div class="col-md-8 col-md-offset-2">
   <ul class="timeline">
     {{!-- render each entry using the timeline-entry.html template --}}
-    {{{ renderTimelineBody this.entries }}}
+    {{{ renderTimelineBody this.entries this.era_short }}}
   </ul>
 </div>

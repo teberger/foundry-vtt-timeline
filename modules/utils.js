@@ -1,13 +1,24 @@
 export let constants = {
     DEBUG_MODE: true,
     MODULE_NAME: "foundry-timeline",
+    CONFIG_USE_ABOUT_TIME_OPTION: "use-about-time",
     TIMELINE_FOLDER_NAME: "_all_timelines",
     MAX_TAB_TITLE_LENGTH: 14,
     HTML_NO_DESCRIPTION: "<p>No Description given...</p>",
     TIMELINE_METADATA_JOURNAL_ENTRY_NAME: "_metadata",
     TIMELINE_METADATA_ERA: "era",
-    TIMELINE_METADATA_ERA_INITIALS: "era_initials",
-    TIMELINE_METADATA_DESCRIPTION: "htmlDescription"
+    TIMELINE_METADATA_ERA_INITIALS: "era_short",
+    TIMELINE_METADATA_DESCRIPTION: "htmlDescription",
+    TIMELINE_ENTRY_EVENT_TYPES: ["trivial", "minor", "important", "major", "milestone"],
+    TIMELINE_ENTRY_YEAR_KEY: "year",
+    TIMELINE_ENTRY_MONTH_KEY: "month",
+    TIMELINE_ENTRY_DAY_KEY: "day",
+    TIMELINE_ENTRY_HOUR_KEY: "hour",
+    TIMELINE_ENTRY_MINUTES_KEY: "minutes",
+    TIMELINE_ENTRY_EVENT_CLASS_KEY: "eventClass",
+    TIMELINE_ENTRY_EVENT_TYPE_KEY: "eventType",
+    TIMELINE_ENTRY_EVENT_TITLE_KEY: "eventTitle",
+    TIMELINE_ENTRY_DESCRIPTION_KEY: "htmlDescription"
 };
 
 export let isNullOrUndefined = (obj) => {

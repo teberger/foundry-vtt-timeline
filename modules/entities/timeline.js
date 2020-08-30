@@ -11,49 +11,15 @@ export default class Timeline {
         this.playerVisible = data.playerVisible || false;
         this.era = data.era || "";
         this.era_short = data.era_short || "";
-
-        // TODO delete this and load from disk instead
-        this.entries = [{
-                year: 1975,
-                day: 16,
-                month: 8,
-                hours: 21,
-                minutes: 30,
-                era_short: "GD",
-                eventClass: "important",
-                eventType: "Gathering / Conference",
-                eventTitle: "Loyer joined the party",
-                htmlDescription: "<p>Loyer joins the party</p>"
-            },
-            {
-                year: 1975,
-                day: 18,
-                month: 9,
-                hours: 21,
-                minutes: 30,
-                era_short: "GD",
-                eventClass: "Era",
-                eventType: "Gathering / Conference",
-                eventTitle: "Loyer afk",
-                htmlDescription: "<p>Loyer goes afk through every session and offers absolutely no input</p>"
-            },
-            {
-                year: 1975,
-                day: 17,
-                month: 9,
-                hours: 21,
-                minutes: 30,
-                era_short: "GD",
-                eventClass: "Era",
-                eventType: "Gathering / Conference",
-                eventTitle: "Loyer dies",
-                htmlDescription: "<p>I get rid of a problem and destroy the stupid halfling</p>"
-            }
-        ];
+        this.reload();
     }
 
     reload() {
-        //TODO read from disk using some ID
+        this.folder.content.map(entry => {
+            if (entry.name !== constants.TIMELINE_METADATA_JOURNAL_ENTRY_NAME) {
+                this.entries.push(new TimelineEntry(JSON.parse(entry.data.content)));
+            }
+        });
     }
 
     /**
@@ -73,6 +39,7 @@ export default class Timeline {
             name: this.title,
             shortName: this.shortName,
             era: this.era,
+            era_short: this.era_short,
             description: TextEditor.enrichHTML(this.htmlDescription),
             playerVisible: this.playerVisible,
             entries: this.entries

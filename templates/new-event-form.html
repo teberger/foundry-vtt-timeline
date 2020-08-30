@@ -1,0 +1,42 @@
+<form>
+    <div class="grid-container">
+        <fieldset>
+            <input type="checkbox" class="use-about-time-checkbox" {{#if useAboutTime }} checked {{/if}}
+                {{#if aboutTimeEnabled }}{{else}}disabled{{/if}} />
+            <label for="useAboutTime"><b>Use current AboutTime?</b></label><br>
+            <label for="time">time</label>
+            <input type="text" id="timeString" name="timeString" placeholder="{{timeString}}" {{#if useAboutTime }} defaultValue="{{timeString}}" disabled
+                {{/if}} />
+        </fieldset>
+        <fieldset>
+            <label for="year">Year</label>
+            <input type="text" id="year" name="year" placeholder="{{years}}" {{#if useAboutTime }}defaultValue="{{years}}"  disabled {{/if}} />
+            <label for="month">Numerical Month</label>
+            <input type="text" id="month" name="month" placeholder="{{months}}" {{#if useAboutTime }} defaultValue="{{months}}" disabled {{/if}} />
+            <label for="day">Day Number</label>
+            <input type="text" id="day" name="day" placeholder="{{days}}" {{#if useAboutTime }} defaultValue="{{days}}" disabled {{/if}} />
+        </fieldset>
+        <fieldset class="titles">
+            <label for="eventTitle">Event Title:</label>
+            <input type="text" id="eventTitle" name="eventTitle" required />
+
+            <label for="eventType">Event Type:</label>
+            <input type="text" id="eventType" name="eventType" required />
+
+            <label for="eventClass">Event Class:</label>
+            <div display="float">
+                {{#each eventTypes }}
+                    <input class="eventClass" value="{{this}}" type="radio" id="{{this}}" name="eventClass" />
+                    <label for="{{this}}">{{this}}</label>
+                {{/each}}
+            </div>
+        </fieldset>
+        <fieldset class="tinymce-fieldset description">
+            <label for="description">Event Summary:</label>
+            {{editor target="description" button=true editable=true}}
+        </fieldset>
+        <footer class="footer">
+            <button class="btn" type="submit" name="submit" z-index=99>Create</button>
+        </footer>
+    </div>
+</form>

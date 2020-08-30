@@ -1,6 +1,7 @@
 import Timeline from "../entities/timeline.js"
 import * as logger from "../logger.js"
 import AddTimelineForm from "./AddTimelineForm.js";
+import AddEventForm from "./AddEventForm.js";
 import { constants, isNullOrUndefined, timelineFolder } from "../utils.js"
 import DeleteTimelineForm from "./DeleteTimelinesForm.js";
 
@@ -13,18 +14,21 @@ export default class ActiveTimelinesApp extends Application {
         this.refreshData()
     }
 
+    /**
+     * TODO could be a performance issue to access all these different files at the same time. Maybe refactor here
+     */
     refreshData() {
         this.allTimelines = timelineFolder().children.map(entry => {
             logger.log(logger.DEBUG, "Reading timeline data for ", entry.data.name);
             // get _metadata journal entry
-            // read the content
-            // use it to instantiate the Timeline
             let metadataJournal = entry.content.find(e => {
                 return e.name === constants.TIMELINE_METADATA_JOURNAL_ENTRY_NAME
             })
 
+            // read the content
             let data = JSON.parse(metadataJournal.data.content)
 
+            // use it to instantiate the Timeline
             return new Timeline(mergeObject(data, {
                 title: entry.data.name,
                 htmlDescription: data.htmlDescription,
@@ -67,9 +71,7 @@ export default class ActiveTimelinesApp extends Application {
                     let folder = game.journal.directory.folders.find(f => f.name === timelineName)
 
                     if (!isNullOrUndefined(folder)) {
-                        let folderId = folder._id
-                        logger.log(logger.INFO, "Add event to timeline's folder ", folderId);
-                        // new AddEventForm({ folderId: folderId }).render(true)
+                        new AddEventForm({ parentTimelineFolder: folder }, this.parent).render(true)
                     } else {
                         logger.log(logger.ERR, "Could not find timeline folder? Something bad has happened in " + constants.TIMELINE_FOLDER_NAME);
                     }

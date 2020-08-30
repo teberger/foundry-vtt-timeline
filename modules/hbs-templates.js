@@ -12,12 +12,13 @@ export let preloadTemplates = function() {
     loadTemplates(templates);
 };
 
-export let renderTimelineBodyTmpl = function(entries) {
+export let renderTimelineBodyTmpl = function(entries, era_short) {
     let template_function = Handlebars.partials['modules/foundry-timeline/templates/partials/timelineEntry.html']
 
     return entries.map(function(context, index) {
         let invert = index % 2 == 0 ? "timeline-entry-inverted" : "";
         context['invert'] = invert
+        context['era_short'] = era_short
         return template_function(context)
     }).join('\n');
 };

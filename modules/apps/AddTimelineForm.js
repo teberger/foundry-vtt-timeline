@@ -20,9 +20,7 @@ export default class AddTimelineForm extends FormApplication {
         });
     }
 
-
     async _onEditorSave(target, element, content) {
-        // // needed?
         this[target] = content;
     }
 
