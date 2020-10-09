@@ -1,5 +1,5 @@
 export let constants = {
-    DEBUG_MODE: true,
+    DEBUG_MODE: false,
     PERMISSION_NONE: 0,
     PERMISSION_OBSERVER: 2,
     MODULE_NAME: "foundry-timeline",
