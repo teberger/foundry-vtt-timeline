@@ -8,6 +8,7 @@ export default class AddEventForm extends FormApplication {
         this.parentTimelineFolder = data.parentTimelineFolder
         this.useAboutTime = game.settings.get(c.MODULE_NAME, c.CONFIG_USE_ABOUT_TIME_OPTION);
         this.eventClass = c.TIMELINE_ENTRY_EVENT_TYPES[0]
+        this.data = {}
     }
 
     static get defaultOptions() {
@@ -17,40 +18,46 @@ export default class AddEventForm extends FormApplication {
             title: "New Event",
             width: 600,
             height: 700,
-            closeOnSubmit: true
+            closeOnSubmit: false
         });
     }
 
     async _updateObject(event, formData, x) {
         logger.log(logger.DEBUG, "Adding journal entry to '", this.parentTimelineFolder.data.name, "'")
 
-        let playerVisible = formData.playerVisible || false;
-        let time = isNullOrUndefined(formData.timeString) ?
-            event.target.elements.timeString.getAttribute('defaultValue') :
-            formData.timeString;
+        if (event.type == "mcesave") {
+            this.data[c.TIMELINE_ENTRY_DESCRIPTION_KEY] = formData.description
+            return
+        }
+        else {
+            let playerVisible = formData.playerVisible || false;
+            let time = isNullOrUndefined(formData.timeString) ?
+                event.target.elements.timeString.getAttribute('defaultValue') :
+                formData.timeString;
 
-        let data = {}
-        data[c.TIMELINE_ENTRY_YEAR_KEY] = Number(isNullOrUndefined(formData.year) ?
-            event.target.elements.year.getAttribute('defaultValue') : formData.year);
-        data[c.TIMELINE_ENTRY_DAY_KEY] = Number(isNullOrUndefined(formData.day) ?
-            event.target.elements.day.getAttribute('defaultValue') : formData.day);
-        data[c.TIMELINE_ENTRY_MONTH_KEY] = Number(isNullOrUndefined(formData.month) ?
-            event.target.elements.month.getAttribute('defaultValue') : formData.month);
-        data[c.TIMELINE_ENTRY_HOUR_KEY] = Number(time.split(':')[0]);
-        data[c.TIMELINE_ENTRY_MINUTES_KEY] = Number(time.split(':')[1]);
-        data[c.TIMELINE_ENTRY_EVENT_CLASS_KEY] = this.eventClass;
-        data[c.TIMELINE_ENTRY_EVENT_TITLE_KEY] = formData.eventTitle;
-        data[c.TIMELINE_ENTRY_DESCRIPTION_KEY] = this.description; // saved to this instance from _onEditorSave()
+            this.data[c.TIMELINE_ENTRY_YEAR_KEY] = Number(isNullOrUndefined(formData.year) ?
+                event.target.elements.year.getAttribute('defaultValue') : formData.year);
+            this.data[c.TIMELINE_ENTRY_DAY_KEY] = Number(isNullOrUndefined(formData.day) ?
+                event.target.elements.day.getAttribute('defaultValue') : formData.day);
+            this.data[c.TIMELINE_ENTRY_MONTH_KEY] = Number(isNullOrUndefined(formData.month) ?
+                event.target.elements.month.getAttribute('defaultValue') : formData.month);
+            this.data[c.TIMELINE_ENTRY_HOUR_KEY] = Number(time.split(':')[0]);
+            this.data[c.TIMELINE_ENTRY_MINUTES_KEY] = Number(time.split(':')[1]);
+            this.data[c.TIMELINE_ENTRY_EVENT_CLASS_KEY] = this.eventClass;
+            this.data[c.TIMELINE_ENTRY_EVENT_TITLE_KEY] = formData.eventTitle;
 
-        return JournalEntry.create({
-            name: data.eventTitle,
-            content: JSON.stringify(data),
-            folder: this.parentTimelineFolder._id,
-            permission: { default: playerVisible ? c.PERMISSION_OBSERVER : c.PERMISSION_NONE }
-        }).then(() => {
-            logger.log(logger.INFO, "Event created")
-            this.activeTimelineApp.render(true)
-        });
+            return JournalEntry.create({
+                name: this.data.eventTitle,
+                content: JSON.stringify(this.data),
+                folder: this.parentTimelineFolder._id,
+                permission: { default: playerVisible ? c.PERMISSION_OBSERVER : c.PERMISSION_NONE }
+            }).then(() => {
+                logger.log(logger.INFO, "Event created")
+                this.activeTimelineApp.render(true)
+                this.close()
+            });
+
+        }
     }
 
     async _onEditorSave(target, element, content) {

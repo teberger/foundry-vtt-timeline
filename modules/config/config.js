@@ -9,4 +9,12 @@ export function register() {
         type: Boolean,
         onChange: value => {}
     });
+    game.settings.register("foundry-timeline", constants.CONFIG_ALLOW_IMPORTS, {
+        name: "Allow Timeline Imports",
+        hint: "Allows timeline entry imports from JSON lists",
+        scope: "global",
+        config: true,
+        type: Boolean,
+        onChange: value => {}
+    });
 }

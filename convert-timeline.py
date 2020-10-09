@@ -1,8 +1,6 @@
 from html.parser import HTMLParser
 import json
 
-from enum import Enum, auto
-
 TIMELINE_FILE = './wa-timeline-copy.html'
 OUT_FILE = './wa-timeline-entry-data.json'
 EVENT_CLASS_ENUMERATION = set(['trivial', 'minor', 'important', 'major', 'milestone'])
@@ -30,7 +28,9 @@ class WaParser(HTMLParser):
     def handle_starttag(self, tag, attr):
         if len(self.path) > 0:
             self.path.append(tag)
-            self.content_builder += f'<{tag}>'
+            self.content_builder += f'<{tag} '
+            self.content_builder += ' '.join([ f'{x}="{y}"' for (x,y) in attr])
+            self.content_builder += ">"
             return
 
         attr = dict(attr)
@@ -43,6 +43,8 @@ class WaParser(HTMLParser):
             self.handle_li(tag, attr)
         elif tag == 'h4':
             self.handle_h4(tag, attr)
+        elif tag == 'small':
+            self.handle_small(tag, attr)
 
     def handle_endtag(self, tag):
         if len(self.path) > 0:
@@ -52,7 +54,7 @@ class WaParser(HTMLParser):
                 self.current_entry['htmlDescription'] = self.content_builder.strip()
                 self.content_builder = ""
             else:
-                self.content_builder += f'</{tag}>'
+                self.content_builder += f' </{tag}> '
             return 
 
         if tag == 'li':
@@ -117,9 +119,8 @@ class WaParser(HTMLParser):
             if len(x.strip()) == 0:
                 return
             else:
-                self.current_entry['entryType'] = x.strip()
-                self.cannot_be_empty = True
-        self.cannot_be_empty = False
+                print(x)
+                self.current_entry['eventType'] = x.strip()
         self.data_handler = handler
 
     def reset_entry(self):
@@ -147,3 +148,6 @@ if __name__ == '__main__':
     
     with open(OUT_FILE, 'w') as f:
         json.dump(parser.all_entries, f, indent=2)
+    
+    with open(OUT_FILE.replace(".json", ".min.json"), 'w') as f:
+        json.dump(parser.all_entries, f)

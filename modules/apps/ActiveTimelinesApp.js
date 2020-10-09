@@ -1,6 +1,7 @@
 import Timeline from "../entities/timeline.js"
 import * as logger from "../logger.js"
 import AddTimelineForm from "./AddTimelineForm.js";
+import ImportTimelineForm from "./ImportTimelineForm.js";
 import AddEventForm from "./AddEventForm.js";
 import { constants, isNullOrUndefined, timelineFolder } from "../utils.js"
 
@@ -126,6 +127,22 @@ export default class ActiveTimelinesApp extends Application {
                     }
                 }
             });
+
+            // TODO [teb] config option, not GM
+            if (game.user.isGM) {
+                buttons.unshift({
+                    label: "Import Timeline",
+                    class: "import-timeline",
+                    parent: this,
+                    icon: "fas fa-file-import",
+                    onclick: function() {
+                        let timelineName = this.parent._tabs[0].active;
+                        let folder = game.journal.directory.folders.find(f => f.name === timelineName)
+                        let folderId = folder._id;
+                        new ImportTimelineForm({}, parent, folderId).render(true)
+                    }
+                });
+            }
         }
         return buttons;
     }
