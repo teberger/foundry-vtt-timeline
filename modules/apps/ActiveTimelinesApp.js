@@ -128,7 +128,7 @@ export default class ActiveTimelinesApp extends Application {
                 }
             });
 
-            if ( game.settings.get(c.MODULE_NAME, constants.CONFIG_ALLOW_IMPORTS)) {
+            if ( game.settings.get(constants.MODULE_NAME, constants.CONFIG_ALLOW_IMPORTS)) {
                 buttons.unshift({
                     label: "Import Timeline",
                     class: "import-timeline",
