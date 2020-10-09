@@ -128,8 +128,7 @@ export default class ActiveTimelinesApp extends Application {
                 }
             });
 
-            // TODO [teb] config option, not GM
-            if (game.user.isGM) {
+            if ( game.settings.get(c.MODULE_NAME, constants.CONFIG_ALLOW_IMPORTS)) {
                 buttons.unshift({
                     label: "Import Timeline",
                     class: "import-timeline",
