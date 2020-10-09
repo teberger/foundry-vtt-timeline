@@ -7,6 +7,8 @@
     "compatibleCoreVersion": "0.7.3",
     "author": "Bedlam",
     "url": "https://github.com/teberger/foundry-vtt-timeline",
+    "download": "https://github.com/teberger/foundry-vtt-timeline/archive/master.zip",
+    "manifest" : "https://raw.githubusercontent.com/teberger/foundry-vtt-timeline/master/module.json",
     "esmodules": [
         "./modules/main-timeline.js",
         "./modules/constants.js"
