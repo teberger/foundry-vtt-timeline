@@ -2,10 +2,10 @@
     "name": "foundry-timeline",
     "title": "World Timelines & Adventuring Log",
     "description": "Provides an GM interface to create, manage, and share multiple timelines happening in their world",
-    "author": "Bedlam",
     "version": "0.0.1",
     "minimumCoreVersion": "0.6.0",
-    "compatibleCoreVersion": "0.6.6",
+    "compatibleCoreVersion": "0.7.3",
+    "author": "Bedlam",
     "url": "https://github.com/teberger/foundry-vtt-timeline",
     "esmodules": [
         "./modules/main-timeline.js",
@@ -17,5 +17,5 @@
         "./styles/wa-display.css",
         "./styles/button.css"
     ],
-    "socket": true
+    "packs": []
 }

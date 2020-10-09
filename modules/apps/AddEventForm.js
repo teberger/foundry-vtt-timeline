@@ -30,14 +30,14 @@ export default class AddEventForm extends FormApplication {
             formData.timeString;
 
         let data = {}
-        data[c.TIMELINE_ENTRY_YEAR_KEY] = isNullOrUndefined(formData.year) ?
-            event.target.elements.year.getAttribute('defaultValue') : formData.year;
-        data[c.TIMELINE_ENTRY_DAY_KEY] = isNullOrUndefined(formData.day) ?
-            event.target.elements.day.getAttribute('defaultValue') : formData.day;
-        data[c.TIMELINE_ENTRY_MONTH_KEY] = isNullOrUndefined(formData.month) ?
-            event.target.elements.month.getAttribute('defaultValue') : formData.month;
-        data[c.TIMELINE_ENTRY_HOUR_KEY] = time.split(':')[0];
-        data[c.TIMELINE_ENTRY_MINUTES_KEY] = time.split(':')[1];
+        data[c.TIMELINE_ENTRY_YEAR_KEY] = Number(isNullOrUndefined(formData.year) ?
+            event.target.elements.year.getAttribute('defaultValue') : formData.year);
+        data[c.TIMELINE_ENTRY_DAY_KEY] = Number(isNullOrUndefined(formData.day) ?
+            event.target.elements.day.getAttribute('defaultValue') : formData.day);
+        data[c.TIMELINE_ENTRY_MONTH_KEY] = Number(isNullOrUndefined(formData.month) ?
+            event.target.elements.month.getAttribute('defaultValue') : formData.month);
+        data[c.TIMELINE_ENTRY_HOUR_KEY] = Number(time.split(':')[0]);
+        data[c.TIMELINE_ENTRY_MINUTES_KEY] = Number(time.split(':')[1]);
         data[c.TIMELINE_ENTRY_EVENT_CLASS_KEY] = this.eventClass;
         data[c.TIMELINE_ENTRY_EVENT_TITLE_KEY] = formData.eventTitle;
         data[c.TIMELINE_ENTRY_DESCRIPTION_KEY] = this.description; // saved to this instance from _onEditorSave()
