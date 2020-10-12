@@ -34,7 +34,7 @@ export default class AddTimelineForm extends FormApplication {
         let playerVisible = formData.playerVisible;
         let era = isNullOrUndefined(formData.era) ? "" : formData.era
         let era_initials = isNullOrUndefined(formData.era_initials) ? "" : formData.era_initials;
-        let htmlDescription = isNullOrUndefined(formData.description) ? "" : this.description;
+        let htmlDescription = isNullOrUndefined(formData.description) ? constants.HTML_NO_DESCRIPTION : formData.description;
 
         logger.log(logger.DEBUG, "Creating new timeline titled ", title.toString());
 

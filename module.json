@@ -2,7 +2,7 @@
     "name": "foundry-timeline",
     "title": "World Timelines & Adventuring Log",
     "description": "Provides an GM interface to create, manage, and share multiple timelines happening in their world",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "minimumCoreVersion": "0.6.0",
     "compatibleCoreVersion": "0.7.3",
     "author": "Bedlam",
