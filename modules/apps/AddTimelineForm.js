@@ -26,11 +26,15 @@ export default class AddTimelineForm extends FormApplication {
     }
 
     async _updateObject(event, formData) {
+        if (event.type == "mcesave") {
+            // skip this event... We'll pick it up when the event is added
+            return
+        }
         let title = formData.title
         let playerVisible = formData.playerVisible;
         let era = isNullOrUndefined(formData.era) ? "" : formData.era
         let era_initials = isNullOrUndefined(formData.era_initials) ? "" : formData.era_initials;
-        let htmlDescription = isNullOrUndefined(this.description) ? "" : this.description;
+        let htmlDescription = isNullOrUndefined(formData.description) ? "" : this.description;
 
         logger.log(logger.DEBUG, "Creating new timeline titled ", title.toString());
 
