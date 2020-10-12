@@ -26,7 +26,7 @@ export default class AddEventForm extends FormApplication {
         logger.log(logger.DEBUG, "Adding journal entry to '", this.parentTimelineFolder.data.name, "'")
 
         if (event.type == "mcesave") {
-            this.data[c.TIMELINE_ENTRY_DESCRIPTION_KEY] = formData.description
+            // skip this event... We'll pick it up when the event is added
             return
         }
         else {
@@ -45,6 +45,7 @@ export default class AddEventForm extends FormApplication {
             this.data[c.TIMELINE_ENTRY_MINUTES_KEY] = Number(time.split(':')[1]);
             this.data[c.TIMELINE_ENTRY_EVENT_CLASS_KEY] = this.eventClass;
             this.data[c.TIMELINE_ENTRY_EVENT_TITLE_KEY] = formData.eventTitle;
+            this.data[c.TIMELINE_ENTRY_DESCRIPTION_KEY] = formData.description;
 
             return JournalEntry.create({
                 name: this.data.eventTitle,

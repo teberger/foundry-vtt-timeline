@@ -17,4 +17,14 @@ export function register() {
         type: Boolean,
         onChange: value => {}
     });
+    game.settings.register("foundry-timeline", constants.CONFIG_DEBUG_MODE, {
+        name: "Turn on debug mode",
+        hint: "Will show the journal entries",
+        scope: "global",
+        config: true,
+        type: Boolean,
+        onChange: value => {
+            constants.DEBUG_MODE = value
+        }
+    });
 }
