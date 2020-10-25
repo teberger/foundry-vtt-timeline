@@ -82,8 +82,8 @@ export default class AddEventForm extends FormApplication {
     getData(options) {
         let datetime = this.useAboutTime ? game.Gametime.DTNow() : null;
         let years = datetime ? datetime.years : "";
-        let months = datetime ? datetime.months : "";
-        let days = datetime ? datetime.days : ""
+        let months = datetime ? datetime.months + 1 : ""; // Damn, 0 based crap.
+        let days = datetime ? datetime.days + 1 : ""; // Damn, 0 based crap
         let timeString = datetime ? ("00" + datetime.hours).slice(-2) + ":" + ("00" + datetime.minutes).slice(-2) : "00:00"
 
         return mergeObject(options, {

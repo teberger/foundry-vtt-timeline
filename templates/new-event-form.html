@@ -7,16 +7,15 @@
                 {{#if aboutTimeEnabled }}{{else}}disabled{{/if}} />
             <label for="useAboutTime"><b>Use current AboutTime?</b></label><br>
             <label for="time">time</label>
-            <input type="text" id="timeString" name="timeString" placeholder="{{timeString}}" {{#if useAboutTime }} defaultValue="{{timeString}}" disabled
-                {{/if}} />
+            <input type="text" id="timeString" name="timeString" placeholder="{{timeString}}" {{#if useAboutTime }} defaultValue="{{timeString}}" {{/if}} />
         </fieldset>
         <fieldset>
             <label for="year">Year</label>
-            <input type="text" id="year" name="year" placeholder="{{years}}" {{#if useAboutTime }}defaultValue="{{years}}"  disabled {{/if}} />
+            <input type="text" id="year" name="year" placeholder="{{years}}" {{#if useAboutTime }}defaultValue="{{years}}"  {{/if}} />
             <label for="month">Numerical Month</label>
-            <input type="text" id="month" name="month" placeholder="{{months}}" {{#if useAboutTime }} defaultValue="{{months}}" disabled {{/if}} />
+            <input type="text" id="month" name="month" placeholder="{{months}}" {{#if useAboutTime }} defaultValue="{{months}}"  {{/if}} />
             <label for="day">Day Number</label>
-            <input type="text" id="day" name="day" placeholder="{{days}}" {{#if useAboutTime }} defaultValue="{{days}}" disabled {{/if}} />
+            <input type="text" id="day" name="day" placeholder="{{days}}" {{#if useAboutTime }} defaultValue="{{days}}" {{/if}} />
         </fieldset>
         <fieldset class="titles">
             <label for="eventTitle">Event Title:</label>
