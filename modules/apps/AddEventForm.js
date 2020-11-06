@@ -45,7 +45,7 @@ export default class AddEventForm extends FormApplication {
             this.data[c.TIMELINE_ENTRY_MINUTES_KEY] = Number(time.split(':')[1]);
             this.data[c.TIMELINE_ENTRY_EVENT_CLASS_KEY] = this.eventClass;
             this.data[c.TIMELINE_ENTRY_EVENT_TITLE_KEY] = formData.eventTitle;
-            this.data[c.TIMELINE_ENTRY_DESCRIPTION_KEY] = formData.mce_10;
+            this.data[c.TIMELINE_ENTRY_DESCRIPTION_KEY] = formData.mce_0;
 
             return JournalEntry.create({
                 name: this.data.eventTitle,
